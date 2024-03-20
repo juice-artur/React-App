@@ -1,11 +1,17 @@
+import { Task } from "../types/Task";
 import { ADD_TASK, DELETE_TASK } from "./actionType";
 
 export interface TaskState {
-  numOfItems: number;
+  tasks: Task[];
 }
 
-const initialState = {
-  numOfItems: 0,
+const initialState: TaskState = {
+  tasks: [
+     { id: 0, createdAt: new Date(), listId: 0 },
+     { id: 1, createdAt: new Date(), listId: 0 },
+     { id: 2, createdAt: new Date(), listId: 1 },
+     { id: 3, createdAt: new Date(), listId: 1 }
+  ]
 };
 
 const taskReducer = (state = initialState, action : any) => {
@@ -13,14 +19,18 @@ const taskReducer = (state = initialState, action : any) => {
     case ADD_TASK:
       return {
         ...state,
-        numOfItems: state.numOfItems + 1,
+        tasks: [
+          ...state.tasks,
+          { id: state.tasks.length, createdAt: new Date(), listId: 0 }
+        ]
       };
 
     case DELETE_TASK:
       return {
         ...state,
-        numOfItems: state.numOfItems - 1,
+        tasks: state.tasks.filter(task => task.id !== action.payload)
       };
+
     default:
       return state;
   }

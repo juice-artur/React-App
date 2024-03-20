@@ -1,14 +1,15 @@
 import { DragDropContext } from "react-beautiful-dnd";
-import Colum from "../components/Colum";
+import Column from "../components/Column"; // Corrected import
 
-const Homepage = () =>
-{
-    return(<div>
-        <DragDropContext onDragEnd={()=> {}}>
-            <Colum/>
-            <Colum/>
-        </DragDropContext>
-    </div>)
+const Homepage = () => {
+    return (
+        <div style={{ display: "flex" }}>
+            <DragDropContext onDragEnd={() => {}}>
+                <Column id={0} /> 
+                <Column id={1} />
+            </DragDropContext>
+        </div>
+    );
 }
 
 export default Homepage;
