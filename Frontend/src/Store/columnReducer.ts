@@ -1,4 +1,5 @@
 import { ColumnData } from "../types/ColumnData";
+import { PATCH_COLUMN } from "./actionType";
 
 
 export interface ColumState {
@@ -14,7 +15,12 @@ const initialState: ColumState = {
 };
 
 const columnReducer = (state = initialState, action : any) => {
-return state
+  switch (action.type) {
+      case PATCH_COLUMN:
+        return state;
+    default:
+      return state;
+  }
 };
 
 export default columnReducer;

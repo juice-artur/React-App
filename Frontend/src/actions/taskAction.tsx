@@ -1,16 +1,21 @@
-import { ADD_TASK, DELETE_TASK } from "../Store/actionType";
+import { ADD_TASK, DELETE_TASK, PATCH_TASK } from "../Store/actionType";
+import { Task } from "../types/Task";
 
 
-const addTask = () => {
+export const addTask = () => {
   return {
     type: ADD_TASK,
   };
 };
 
-const deleteTask = () => {
+export const deleteTask = () => {
   return {
     type: DELETE_TASK,
   };
 };
 
-export { addTask, deleteTask };
+
+export const patchTask = (task: Task) => ({
+  type: PATCH_TASK,
+  payload: task 
+})

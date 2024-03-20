@@ -11,16 +11,6 @@ const Card = ({ task, index }: { task: Task; index: number } ) => {
               {...provided.dragHandleProps}
             >
                 <p>{task.title}</p>
-                <div className="secondary-details">
-                  <p>
-                    <span>
-                      {new Date(task.createdAt).toLocaleDateString('en-us', {
-                        month: 'short',
-                        day: '2-digit',
-                      })}
-                    </span>
-                  </p>
-                </div>
             </div>
           )}
         </Draggable>
