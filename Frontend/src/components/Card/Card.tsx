@@ -3,25 +3,28 @@ import { Task } from "../../types/Task";
 
 const Card = ({ task, index }: { task: Task; index: number } ) => {
     return (
-        <Draggable key={task.id.toString()} draggableId={task.id.toString()} index={index}>
-            {(provided, snapshot) => (
-                <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    style={{
-                        marginTop: '20px',
-                        ...provided.draggableProps.style, // Spread the draggableProps style
-                        background: snapshot.isDragging ? "lightgreen" : "grey",
-                    }}
-                >
-                    <div>
-                        <p>{task.id}</p>
-                    </div>
+        <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+            >
+                <p>{task.title}</p>
+                <div className="secondary-details">
+                  <p>
+                    <span>
+                      {new Date(task.createdAt).toLocaleDateString('en-us', {
+                        month: 'short',
+                        day: '2-digit',
+                      })}
+                    </span>
+                  </p>
                 </div>
-            )}
+            </div>
+          )}
         </Draggable>
-    );
+      );
 };
 
 export default Card;
