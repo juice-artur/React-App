@@ -1,5 +1,5 @@
 import { Task } from "../types/Task";
-import { ADD_TASK, DELETE_TASK, PATCH_TASK } from "./actionType";
+import { ADD_TASK, DELETE_TASK, PATCH_TASK, PATCH_TASKS } from "./actionType";
 
 export interface TaskState {
   tasks: Task[];
@@ -7,7 +7,7 @@ export interface TaskState {
 
 const initialState: TaskState = {
   tasks: [
-     { id: 0, listId: 0 , title: "First task"},
+     { id: 0,  listId: 0 , title: "First task"},
      { id: 1,  listId: 0,  title: "Not cry" },
      { id: 2,  listId: 1,  title: "Todo homework" },
      { id: 3,  listId: 1,  title: "Chating with manager" }
@@ -17,7 +17,6 @@ const initialState: TaskState = {
 const taskReducer = (state = initialState, action : any) => {
   switch (action.type) {
     case PATCH_TASK:
-      console.log(action)
       return {
         ...state,
         tasks: state.tasks.map(task =>
@@ -25,6 +24,12 @@ const taskReducer = (state = initialState, action : any) => {
             ? { ...task, listId: action.payload.listId}
             : task
         )
+      };
+
+      case PATCH_TASKS:
+      return {
+        ...state,
+        tasks: [...action.payload.tasks]
       };
 
     case ADD_TASK:

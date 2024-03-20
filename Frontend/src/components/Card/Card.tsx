@@ -3,7 +3,7 @@ import { Task } from "../../types/Task";
 
 const Card = ({ task, index }: { task: Task; index: number } ) => {
     return (
-        <Draggable key={task.id} draggableId={task.id.toString()} index={index}>
+        <Draggable key={task.title} draggableId={task.title + task.id} index={index}>
           {(provided) => (
             <div
               ref={provided.innerRef}
