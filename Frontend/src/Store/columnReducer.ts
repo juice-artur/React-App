@@ -16,8 +16,11 @@ const initialState: ColumState = {
 
 const columnReducer = (state = initialState, action : any) => {
   switch (action.type) {
-      case PATCH_COLUMN:
-        return state;
+    case PATCH_COLUMN:
+      return {
+        ...state,
+        columns: action.payload.columns
+      };
     default:
       return state;
   }

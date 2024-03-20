@@ -4,6 +4,7 @@ import { ColumnData } from "../types/ColumnData";
 import Column from "./Column";
 import { patchTask, patchTasks } from "../actions/taskAction";
 import { Task } from "../types/Task";
+import { patchColumn } from "../actions/columnAction";
 
 const Homepage = () => {
     const dispatch = useDispatch();
@@ -12,18 +13,22 @@ const Homepage = () => {
 
     const onDragEnd = (result: DropResult) => {
         const { source, destination, draggableId } = result;
-
   
         if (!destination) {
             return;
         }
-
+        if (result.type === 'COLUMN') {
+            const newColumns : ColumnData[] = Array.from(columns);
+            const movedColumn = newColumns.splice(source.index, 1)[0];
+            newColumns.splice(destination.index, 0, movedColumn);
+        
+            dispatch(patchColumn(newColumns));
+            return;
+          }
         if (
             source.droppableId === destination.droppableId &&
             source.index !== destination.index
         ) {
-            console.log(source);
-            console.log(draggableId);
             const newTasks: Task[]= [...tasks];
             const movedTask = newTasks.find((t: Task) => t.title+t.id === draggableId);
             console.log(movedTask);
@@ -35,8 +40,6 @@ const Homepage = () => {
             }
         }
 
-
-        // Check if the card was moved to a new location
         if (
             source.droppableId !== destination.droppableId 
         ) {
@@ -80,3 +83,5 @@ const Homepage = () => {
 };
 
 export default Homepage;
+
+

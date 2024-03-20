@@ -1,7 +1,8 @@
 import { PATCH_COLUMN } from "../Store/actionType";
+import { ColumnData } from "../types/ColumnData";
 
 
-export const patchTask = (task: any) => ({
+export const patchColumn = (columns: ColumnData[]) => ({
   type: PATCH_COLUMN,
-  payload: task 
-})
+  payload: { columns }
+});
