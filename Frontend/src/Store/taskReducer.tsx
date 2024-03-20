@@ -1,5 +1,9 @@
 import { ADD_TASK, DELETE_TASK } from "./actionType";
 
+export interface TaskState {
+  numOfItems: number;
+}
+
 const initialState = {
   numOfItems: 0,
 };
