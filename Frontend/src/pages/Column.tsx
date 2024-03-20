@@ -2,18 +2,19 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useSelector } from 'react-redux';
 import { Task } from '../types/Task';
 import Card from '../components/Card/Card';
+import { ColumnData } from '../types/ColumnData';
 
-const Column = ({ columnId }: { columnId: number }) => {
+const Column = ({ columnData, index }: { columnData: ColumnData; index: number }) => {
     const tasks = useSelector((state: any) => state.taskReducer.tasks);
 
     return (
-        <Draggable draggableId={columnId.toString()} index={columnId}>
-            {(provided, snapshot) => (
+        <Draggable draggableId={columnData.title} index={index}>
+            {(provided) => (
                 <div ref={provided.innerRef} {...provided.draggableProps}>
                     <div {...provided.dragHandleProps}>
-                        {/* Drag handle content */}
+                        <p>{columnData.title}</p>
                     </div>
-                    <Droppable droppableId={columnId.toString()} key={columnId}>
+                    <Droppable droppableId={columnData.title} key={index}>
                         {(provided, snapshot) => (
                             <div
                                 ref={provided.innerRef}
@@ -21,12 +22,11 @@ const Column = ({ columnId }: { columnId: number }) => {
                                 style={{
                                     background: snapshot.isDraggingOver ? "lightblue" : "lightgrey",
                                     width: 200,
-                                    padding: 8,
+                                    padding: 15,
                                     marginRight: '20px'
                                 }}
                             >
-                                <p>{"test"}</p>
-                                {tasks.filter((t: Task) => t.listId === columnId).map((task: Task, index: number) => (
+                                {tasks.filter((t: Task) => t.listId === columnData.id).map((task: Task, index: number) => (
                                     <Card key={task.id} task={task} index={index} />
                                 ))}
                                 {provided.placeholder}
