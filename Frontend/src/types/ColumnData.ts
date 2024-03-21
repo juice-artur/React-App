@@ -1,4 +1,5 @@
 export interface ColumnData {
     id: number;
-    title:string
+    title:string;
+    columnPosition: number
   }

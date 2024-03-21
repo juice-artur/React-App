@@ -2,7 +2,7 @@ import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import { ColumnData } from "../types/ColumnData";
 import Column from "./Column";
-import { patchTask, patchTasks } from "../actions/taskAction";
+import { patchTasks } from "../actions/taskAction";
 import { Task } from "../types/Task";
 import { patchColumn } from "../actions/columnAction";
 
@@ -17,14 +17,30 @@ const Homepage = () => {
         if (!destination) {
             return;
         }
-        if (result.type === 'COLUMN') {
-            const newColumns : ColumnData[] = Array.from(columns);
-            const movedColumn = newColumns.splice(source.index, 1)[0];
-            newColumns.splice(destination.index, 0, movedColumn);
+        if (result.type === 'COLUMN' && source.index !== destination.index) {
+
+            const movedColumn = columns.find((c: ColumnData) => c.title+c.id === draggableId);
+            if (!movedColumn) {
+                return;
+            }
         
-            dispatch(patchColumn(newColumns));
-            return;
-          }
+            const newColumns = columns.map((col: ColumnData) => {
+                if (col.id === movedColumn.id) {
+                    return { ...col, columnPosition: destination.index };
+                } 
+                else if(col.columnPosition <=  destination.index && col.columnPosition >= source.index)
+                {
+                    return { ...col, columnPosition: col.columnPosition - 1 };
+                }
+                else if (col.columnPosition >= destination.index && col.columnPosition <= source.index) {
+                    return { ...col, columnPosition: col.columnPosition + 1 };
+                }
+                return col;
+            });
+        
+            dispatch(patchColumn([...newColumns]));
+            return;          
+        }
 
         if (source.droppableId === destination.droppableId &&
             source.index !== destination.index) {
@@ -92,7 +108,7 @@ const Homepage = () => {
                             {...provided.droppableProps}
                             style={{ display: "flex" }}
                         >
-                            {columns.map((column: ColumnData, index: number) => (
+                            {[...columns].sort((first: ColumnData, second: ColumnData) => first.columnPosition -second.columnPosition).map((column: ColumnData, index: number) => (
                                 <Column key={column.id} columnData={column} index={index} />
                             ))}
                             {provided.placeholder}
