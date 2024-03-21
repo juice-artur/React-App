@@ -25,37 +25,59 @@ const Homepage = () => {
             dispatch(patchColumn(newColumns));
             return;
           }
-        if (
-            source.droppableId === destination.droppableId &&
-            source.index !== destination.index
-        ) {
-            const newTasks: Task[]= [...tasks];
-            const movedTask = newTasks.find((t: Task) => t.title+t.id === draggableId);
-            console.log(movedTask);
-            
+
+        if (source.droppableId === destination.droppableId &&
+            source.index !== destination.index) {
+            const movedTask = tasks.find((t: Task) => t.title+t.id === draggableId);
+            const newTasks = tasks.map((task: Task) => {
+                if (task.id === movedTask.id) {
+                    return { ...task, orderInList: destination.index };
+                } else if (task.orderInList >= destination.index && task.orderInList <= source.index) {                    
+                    return { ...task, orderInList: task.orderInList + 1 };
+                }
+                else if(task.orderInList <= destination.index && task.orderInList >= source.index)
+                {
+                    return { ...task, orderInList: task.orderInList - 1 };
+                }
+                return task;
+            });
             if (movedTask) {
-                newTasks.splice(movedTask.id, 1);
-                newTasks.splice(destination.index * (1 + movedTask.listId), 0, movedTask);
-                dispatch(patchTasks(newTasks));
+                dispatch(patchTasks([...newTasks]));
             }
         }
 
-        if (
-            source.droppableId !== destination.droppableId 
-        ) {
+        if (source.droppableId !== destination.droppableId ) {
+            const movedTask = tasks.find((t: Task) => t.title+t.id === draggableId);
+            const newTasks = tasks.map((task: Task) => {
+                if (task.id === movedTask.id) {
+                    return { ...task, orderInList: destination.index, 
+                        listId: columns.filter((c: ColumnData) => c.title+c.id == destination.droppableId)[0].id 
+                    };
+                }
+                else
+                {
+                    const destColumnId: number = columns.filter((c: ColumnData) => c.title+c.id == destination.droppableId)[0].id
+                    
+                    if(task.listId == destColumnId)
+                    {
+                        if (task.orderInList >= destination.index) {                    
+                            return { ...task, orderInList: task.orderInList + 1 };
+                        }
+                        return task;
+                    }
+                    else if(task.listId != destColumnId) 
+                    {
+                        if (task.orderInList > source.index) {                    
+                            return { ...task, orderInList: task.orderInList - 1 };
+                        }
+                        return task
+                    }
+                }
 
-            console.log(draggableId);
-            
-            const task = tasks.find((t: Task) => t.title+t.id === draggableId);
-            if (task) {
-                console.log(source)
-                console.log(destination)
-    
-                dispatch(patchTask({
-                    id: task.id,
-                    listId: columns.filter((c: ColumnData) => c.title+c.id == destination.droppableId)[0].id ,
-                    title: task.title
-                }));
+                return task;
+            });
+            if (movedTask) {
+                dispatch(patchTasks([...newTasks]));
             }
         }
     };
