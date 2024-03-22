@@ -13,6 +13,9 @@ export class AddReferenceTaskToColumn1711123930069 implements MigrationInterface
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`
+        DROP TABLE IF EXISTS tasks
+    `);
     }
 
 }

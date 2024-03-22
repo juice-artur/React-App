@@ -5,13 +5,13 @@ let connectionOptions: DataSourceOptions = {
   type: "postgres" as "postgres", // It could be mysql, mongo, etc
   host: "localhost",
   port: 5432,
-  username: "postgres", // postgre username
-  password: "postgres", // postgre password
-  database: "db", // postgre db, needs to be created before
-  synchronize: false, // if true, you don't really need migrations
+  username: "postgres",
+  password: "postgres",
+  database: "db", 
+  synchronize: false, 
   logging: true,
-  entities: ["src/**/*.entity{.ts,.js}"], // where our entities reside
-  migrations: ["migrations/*{.ts,.js}"], // where our migrations reside
+  entities: ["src/**/*.entity{.ts,.js}"],
+  migrations: ["migrations/*{.ts,.js}"], 
 };
 
 export default new DataSource({

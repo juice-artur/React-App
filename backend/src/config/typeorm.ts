@@ -1,5 +1,7 @@
 import { registerAs } from '@nestjs/config';
 import { config as dotenvConfig } from 'dotenv';
+import { ColumnEntity } from 'src/models/entities/column/columns';
+import { TaskEntity } from 'src/models/entities/task/task';
 import { DataSource, DataSourceOptions } from "typeorm";
 
 dotenvConfig({ path: '.env' });
@@ -11,8 +13,8 @@ const config = {
     username: `${process.env.DATABASE_USERNAME}`,
     password: `${process.env.DATABASE_PASSWORD}`,
     database: `${process.env.DATABASE_NAME}`,
-    entities: ["dist/**/*.entity{.ts,.js}"],
-    migrations: ["src/migrations/*{.ts,.js}"],
+    entities: [ TaskEntity, ColumnEntity],
+    migrations: ["migrations/*{.ts,.js}"],
     autoLoadEntities: true,
     synchronize: false,
 }
