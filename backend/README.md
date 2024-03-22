@@ -1,20 +1,23 @@
 # BEFOR START
 * Create .env file like this
 
-```
+  ```
   DATABASE_HOST=127.0.0.1
   DATABASE_PORT=5432
   DATABASE_USERNAME=postgres
   DATABASE_PASSWORD=postgres
   DATABASE_NAME=db
-```
+  ```
 
 * Run
-``` 
-docker compose build
-docker compose up
-```
-
+  ``` 
+  docker compose build
+  docker compose up
+  ```
+* run migration
+  ```
+    npm run migration:run
+  ```
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
