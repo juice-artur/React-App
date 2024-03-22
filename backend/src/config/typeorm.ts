@@ -1,7 +1,8 @@
 import { registerAs } from '@nestjs/config';
 import { config as dotenvConfig } from 'dotenv';
-import { ColumnEntity } from 'src/models/entities/column/columns';
-import { TaskEntity } from 'src/models/entities/task/task';
+import { ColumnEntity } from '../models/entities/column/columns';
+import { TaskEntity } from '../models/entities/task/task';
+
 import { DataSource, DataSourceOptions } from "typeorm";
 
 dotenvConfig({ path: '.env' });

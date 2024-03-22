@@ -4,7 +4,8 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import typeorm from './config/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-
+import { TasksService } from './models/entities/task/tasks.service';
+import { TaskEntity } from './models/entities/task/task'; 
 
 @Module({
   imports: [
@@ -14,11 +15,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      
       useFactory: async (configService: ConfigService) => (configService.get('typeorm'))
     }),
+    TypeOrmModule.forFeature([TaskEntity]), 
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, TasksService],
 })
-export class AppModule { }
+export class AppModule {}
