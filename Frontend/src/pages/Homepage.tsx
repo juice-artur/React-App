@@ -5,12 +5,14 @@ import Column from "./Column";
 import { patchTasks } from "../actions/taskAction";
 import { Task } from "../types/Task";
 import { patchColumn } from "../actions/columnAction";
+import { getAllTasks } from "../utils/tasksServer";
+
 
 const Homepage = () => {
     const dispatch = useDispatch();
     const columns = useSelector((state: any) => state.columnReducer.columns);
     const tasks = useSelector((state: any) => state.taskReducer.tasks);
-
+    console.log(getAllTasks());
     const onDragEnd = (result: DropResult) => {
         const { source, destination, draggableId } = result;
   
@@ -48,12 +50,12 @@ const Homepage = () => {
             const newTasks = tasks.map((task: Task) => {
                 if (task.id === movedTask.id) {
                     return { ...task, orderInList: destination.index };
-                } else if (task.orderInList >= destination.index && task.orderInList <= source.index) {                    
-                    return { ...task, orderInList: task.orderInList + 1 };
+                } else if (task.position >= destination.index && task.position <= source.index) {                    
+                    return { ...task, orderInList: task.position + 1 };
                 }
-                else if(task.orderInList <= destination.index && task.orderInList >= source.index)
+                else if(task.position <= destination.index && task.position >= source.index)
                 {
-                    return { ...task, orderInList: task.orderInList - 1 };
+                    return { ...task, orderInList: task.position - 1 };
                 }
                 return task;
             });
@@ -76,15 +78,15 @@ const Homepage = () => {
                     
                     if(task.listId == destColumnId)
                     {
-                        if (task.orderInList >= destination.index) {                    
-                            return { ...task, orderInList: task.orderInList + 1 };
+                        if (task.position >= destination.index) {                    
+                            return { ...task, orderInList: task.position + 1 };
                         }
                         return task;
                     }
                     else if(task.listId != destColumnId) 
                     {
-                        if (task.orderInList > source.index) {                    
-                            return { ...task, orderInList: task.orderInList - 1 };
+                        if (task.position > source.index) {                    
+                            return { ...task, orderInList: task.position - 1 };
                         }
                         return task
                     }
@@ -108,7 +110,8 @@ const Homepage = () => {
                             {...provided.droppableProps}
                             style={{ display: "flex" }}
                         >
-                            {[...columns].sort((first: ColumnData, second: ColumnData) => first.columnPosition -second.columnPosition).map((column: ColumnData, index: number) => (
+                            {
+                            [...columns].sort((first: ColumnData, second: ColumnData) => first.columnPosition -second.columnPosition).map((column: ColumnData, index: number) => (
                                 <Column key={column.id} columnData={column} index={index} />
                             ))}
                             {provided.placeholder}

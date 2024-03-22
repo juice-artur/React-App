@@ -7,11 +7,11 @@ export interface TaskState {
 
 const initialState: TaskState = {
   tasks: [
-     { id: 0, orderInList:0,  listId: 0 , title: "First task"},
-     { id: 1, orderInList:1,  listId: 0,  title: "Not cry" },
-     { id: 4, orderInList:2,  listId: 0 , title: "Another task"},
-     { id: 2, orderInList:0,  listId: 1,  title: "Todo homework" },
-     { id: 3, orderInList:1,  listId: 1,  title: "Chating with manager" }
+     { id: 0, position:0, description:"one", created_at: new Date(), updated_at: new Date(),  listId: 0 , title: "First task"},
+     { id: 1, position:1, description:"one", created_at: new Date(), updated_at: new Date(),  listId: 0,  title: "Not cry" },
+     { id: 4, position:2, description:"one", created_at: new Date(), updated_at: new Date(),  listId: 0 , title: "Another task"},
+     { id: 2, position:0, description:"one", created_at: new Date(), updated_at: new Date(),  listId: 1,  title: "Todo homework" },
+     { id: 3, position:1, description:"one", created_at: new Date(), updated_at: new Date(),  listId: 1,  title: "Chating with manager" }
   ]
 };
 
