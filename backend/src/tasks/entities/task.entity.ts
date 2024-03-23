@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { TaskEntity } from "../task/task";
+import { TaskColumn } from "src/task-columns/entities/task-column.entity";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+
 
 @Entity()
-export class ColumnEntity {
+export class Task {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -21,6 +22,6 @@ export class ColumnEntity {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updated_at: Date;
 
-  @OneToMany(() => TaskEntity, task => task.column)
-  tasks: TaskEntity[];
+  @ManyToOne(() => TaskColumn, taskColumn => taskColumn.tasks)
+  column: TaskColumn;
 }

@@ -3,9 +3,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import typeorm from './config/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TasksService } from './models/entities/task/tasks.service';
-import { TaskEntity } from './models/entities/task/task'; 
+import { ConfigModule, ConfigService } from '@nestjs/config'; 
+import { AutomapperModule } from '@automapper/nestjs';
+import { pojos} from '@automapper/pojos';
+import { TasksModule } from './tasks/tasks.module';
+import { Task } from './tasks/entities/task.entity';
+import { TaskColumnsModule } from './task-columns/task-columns.module';
+
 
 @Module({
   imports: [
@@ -17,9 +21,20 @@ import { TaskEntity } from './models/entities/task/task';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => (configService.get('typeorm'))
     }),
-    TypeOrmModule.forFeature([TaskEntity]), 
+    TypeOrmModule.forFeature([Task]), 
+    AutomapperModule.forRoot(
+      [
+          {
+              name: 'pojos',
+              strategyInitializer: pojos(),
+          },
+      ],
+      {
+
+      }
+  ), TasksModule, TaskColumnsModule
   ],
   controllers: [AppController],
-  providers: [AppService, TasksService],
+  providers: [AppService],
 })
 export class AppModule {}
