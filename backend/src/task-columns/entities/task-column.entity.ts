@@ -2,9 +2,8 @@ import { Task } from "src/tasks/entities/task.entity";
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 
 @Entity()
-export class TaskColumn 
-{
-    @PrimaryGeneratedColumn()
+export class TaskColumn {
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()

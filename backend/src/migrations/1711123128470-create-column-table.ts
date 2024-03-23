@@ -4,7 +4,7 @@ export class CreateColumnTable1711123128470 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query( `
-            CREATE TABLE IF NOT EXISTS columns_table  (
+            CREATE TABLE IF NOT EXISTS task_columns  (
                 id SERIAL PRIMARY KEY,
                 title VARCHAR NOT NULL,
                 description TEXT,
@@ -17,8 +17,7 @@ export class CreateColumnTable1711123128470 implements MigrationInterface {
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-            DROP TABLE IF EXISTS columns_table
+            DROP TABLE IF EXISTS task_columns 
         `);
     }
-
 }

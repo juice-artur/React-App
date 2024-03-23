@@ -18,7 +18,7 @@ export class CreateTasksTable1711106069103 implements MigrationInterface {
             ALTER TABLE tasks
             ADD CONSTRAINT FK_column_id
             FOREIGN KEY (column_id)
-            REFERENCES columns(id)
+            REFERENCES task_columns(id) 
             ON DELETE CASCADE;
         `);
     }
