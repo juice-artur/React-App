@@ -26,7 +26,7 @@ const Column = ({ columnData, index }: { columnData: ColumnData; index: number }
                                     marginRight: '20px'
                                 }}
                             >
-                                {tasks.filter((t: Task) => t.listId === columnData.id)
+                                {tasks.filter((t: Task) => t.columnId === columnData.id)
                                 .sort((first:Task, second:Task)=> first.position - second.position)
                                 .map((task: Task, index: number) => (
                                     <Card key={task.title} task={task} index={index} />

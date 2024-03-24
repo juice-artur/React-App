@@ -6,13 +6,20 @@ import { patchTasks } from "../actions/taskAction";
 import { Task } from "../types/Task";
 import { patchColumn } from "../actions/columnAction";
 import { getAllTasks } from "../utils/tasksServer";
+import { useEffect } from "react";
+
 
 
 const Homepage = () => {
     const dispatch = useDispatch();
+     
+    useEffect(() => {
+        dispatch(getAllTasks());
+    }, [dispatch]); 
+
+    
     const columns = useSelector((state: any) => state.columnReducer.columns);
     const tasks = useSelector((state: any) => state.taskReducer.tasks);
-    console.log(getAllTasks());
     const onDragEnd = (result: DropResult) => {
         const { source, destination, draggableId } = result;
   
@@ -76,14 +83,14 @@ const Homepage = () => {
                 {
                     const destColumnId: number = columns.filter((c: ColumnData) => c.title+c.id == destination.droppableId)[0].id
                     
-                    if(task.listId == destColumnId)
+                    if(task.columnId == destColumnId)
                     {
                         if (task.position >= destination.index) {                    
                             return { ...task, orderInList: task.position + 1 };
                         }
                         return task;
                     }
-                    else if(task.listId != destColumnId) 
+                    else if(task.columnId != destColumnId) 
                     {
                         if (task.position > source.index) {                    
                             return { ...task, orderInList: task.position - 1 };
@@ -124,5 +131,3 @@ const Homepage = () => {
 };
 
 export default Homepage;
-
-

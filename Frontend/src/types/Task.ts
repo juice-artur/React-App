@@ -5,6 +5,6 @@ export interface Task {
     position: number;
     created_at: Date;
     updated_at: Date;
-    listId: number;
+    columnId: number;
 
   }
