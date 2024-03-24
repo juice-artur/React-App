@@ -1,8 +1,9 @@
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useSelector } from 'react-redux';
-import { Task } from '../types/Task';
-import Card from '../components/Card/Card';
-import { ColumnData } from '../types/ColumnData';
+import { Task } from '../../types/Task';
+import Card from '../Card/Card';
+import { ColumnData } from '../../types/ColumnData';
+import CreateCard from '../CreateCard/CreateCard';
 
 const Column = ({ columnData, index }: { columnData: ColumnData; index: number }) => {
     const tasks = useSelector((state: any) => state.taskReducer.tasks);
@@ -30,6 +31,8 @@ const Column = ({ columnData, index }: { columnData: ColumnData; index: number }
                                     snapshot.isDraggingOver ? 'bg-blue-100' : 'bg-gray-100'
                                 }`}
                             >
+                                <CreateCard classNames={["mb-4", "relative", "h-16"]}/>
+
                                 {tasks
                                     .filter((t: Task) => t.columnId === columnData.id)
                                     .sort((first: Task, second: Task) => first.position - second.position)

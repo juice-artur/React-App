@@ -1,0 +1,55 @@
+import { useState } from "react";
+import { Draggable } from "react-beautiful-dnd";
+import { FaPlus } from "react-icons/fa";
+import { CreateTaskModal } from "../ModalWindows/CreateTask/CreateTaskModal";
+
+interface CreateCardProps {
+    classNames?: string[];
+}
+
+const CreateCard: React.FC<CreateCardProps> = ({ classNames = [] }) => {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCreateTask = (taskTitle) => {
+        console.log('Creating task with title:', taskTitle);
+    };
+
+    return (
+        <Draggable key={"CreateCard"} draggableId={"CreateCard"} index={0} isDragDisabled={true}>
+            {(provided) => (
+                <div
+                    className={`border-dashed border-2 border-gray-400 flex ${classNames.join(' ')}`}
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                >
+                    <button onClick={openModal}>
+                        <div className="flex items-center">
+                            <FaPlus className="mx-2" />
+                            <h1>Add new card</h1>
+                        </div>
+                    </button>
+
+                    <CreateTaskModal
+                        isOpen={isModalOpen}
+                        onClose={closeModal}
+                        onCreateTask={handleCreateTask}
+                    />
+
+
+                </div>
+            )}
+        </Draggable>
+    );
+};
+
+export default CreateCard;

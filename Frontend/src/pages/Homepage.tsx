@@ -1,7 +1,7 @@
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import { ColumnData } from "../types/ColumnData";
-import Column from "./Column";
+import Column from "../components/Column/Column";
 import { Task } from "../types/Task";
 import { getAllTasks, patchTask } from "../utils/tasksServer";
 import { useEffect } from "react";
