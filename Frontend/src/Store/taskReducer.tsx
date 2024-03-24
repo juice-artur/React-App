@@ -23,8 +23,6 @@ const taskReducer = (state = initialState, action: any) => {
       case PATCH_TASK:
         const index = state.tasks.findIndex(task => task.id === action.payload.id);
         if (index !== -1) {
-          console.log(action.payload);
-          
           const updatedTasks = [...state.tasks];
           updatedTasks[index] = action.payload;
   

@@ -1,23 +1,47 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTaskColumnDto } from './dto/create-task-column.dto';
 import { UpdateTaskColumnDto } from './dto/update-task-column.dto';
+import { TaskColumn } from './entities/task-column.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class TaskColumnsService {
+
+  constructor(
+    @InjectRepository(TaskColumn)
+    private taskColumnRepository: Repository<TaskColumn>) { }
   create(createTaskColumnDto: CreateTaskColumnDto) {
     return 'This action adds a new taskColumn';
   }
 
   findAll() {
-    return `This action returns all taskColumns`;
+    return this.taskColumnRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} taskColumn`;
+    return this.taskColumnRepository.findOne({
+      where: { id }
+    });
   }
 
-  update(id: number, updateTaskColumnDto: UpdateTaskColumnDto) {
-    return `This action updates a #${id} taskColumn`;
+  async update(id: number, updateTaskColumnDto: UpdateTaskColumnDto) {
+    const taskColumnToUpdate = await this.taskColumnRepository.findOne({
+      where: { id },
+    });
+
+    if (!taskColumnToUpdate) {
+      throw new Error(`Task with ID ${id} not found`);
+    }
+
+
+    taskColumnToUpdate.title = updateTaskColumnDto.title;
+    taskColumnToUpdate.description = updateTaskColumnDto.description;
+    taskColumnToUpdate.position = updateTaskColumnDto.position;
+    taskColumnToUpdate.created_at = updateTaskColumnDto.created_at;
+    taskColumnToUpdate.updated_at = updateTaskColumnDto.updated_at;
+
+    return await this.taskColumnRepository.save(taskColumnToUpdate);
   }
 
   remove(id: number) {

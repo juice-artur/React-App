@@ -1,25 +1,30 @@
 import { ColumnData } from "../types/ColumnData";
-import { PATCH_COLUMN } from "./actionType";
+import { GET_COLUMNS, PATCH_COLUMN } from "./actionType";
 
 
 export interface ColumState {
   columns: ColumnData[];
+  loading: boolean;
 }
 
 const initialState: ColumState = {
-  columns: [
-     { id: 0, columnPosition:0, title: "First colum"},
-     { id: 1,columnPosition:1,  title: "Secomd colum" },
-
-  ]
+  columns:  [],
+  loading: false,
 };
 
 const columnReducer = (state = initialState, action : any) => {
   switch (action.type) {
+    case GET_COLUMNS:
+      return {
+        ...state,
+        columns: action.payload,
+        loading: false
+
+      }
     case PATCH_COLUMN:
       return {
         ...state,
-        columns: [...action.payload.columns]
+        columns: [...action.payload]
       };
     default:
       return state;

@@ -41,7 +41,6 @@ export class TasksService {
 
   async update(id: number, updateTaskDto: UpdateTaskDto) : Promise<TaskDto | undefined> {
     const { title, description, position, created_at, updated_at, columnId } = updateTaskDto;
-    console.log(updateTaskDto);
     const taskToUpdate = await this.taskRepository.findOne({
       where: { id },
       relations: ['column']

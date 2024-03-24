@@ -6,6 +6,7 @@ import { Task } from "../types/Task";
 import { patchColumn } from "../actions/columnAction";
 import { getAllTasks, patchTask } from "../utils/tasksServer";
 import { useEffect } from "react";
+import { getAllTaskColumns } from "../utils/taskColumsServer";
 
 
 
@@ -14,6 +15,7 @@ const Homepage = () => {
 
     useEffect(() => {
         dispatch(getAllTasks());
+        dispatch(getAllTaskColumns());
     }, [dispatch]);
 
 

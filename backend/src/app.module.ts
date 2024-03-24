@@ -6,6 +6,7 @@ import typeorm from './config/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AutomapperModule } from '@automapper/nestjs';
 import { TasksModule } from './tasks/tasks.module';
+import { TaskColumnsModule } from './task-columns/task-columns.module';
 
 
 
@@ -13,6 +14,7 @@ import { TasksModule } from './tasks/tasks.module';
 @Module({
   imports: [
     TasksModule,
+    TaskColumnsModule,
     AutomapperModule, 
     ConfigModule.forRoot({
       isGlobal: true,
