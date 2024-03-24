@@ -1,51 +1,48 @@
 import { Task } from "../types/Task";
-import { ADD_TASK, DELETE_TASK, PATCH_TASK, PATCH_TASKS } from "./actionType";
+import { ADD_TASK, DELETE_TASK, GET_TASKS, PATCH_TASK } from "./actionType";
 
 export interface TaskState {
   tasks: Task[];
+  loading: boolean;
 }
 
 const initialState: TaskState = {
-  tasks: [
-     { id: 0,  listId: 0 , title: "First task"},
-     { id: 1,  listId: 0,  title: "Not cry" },
-     { id: 2,  listId: 1,  title: "Todo homework" },
-     { id: 3,  listId: 1,  title: "Chating with manager" }
-  ]
+  tasks: [],
+  loading: true
 };
 
-const taskReducer = (state = initialState, action : any) => {
+const taskReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case PATCH_TASK:
+    case GET_TASKS:
       return {
         ...state,
-        tasks: state.tasks.map(task =>
-          task.id === action.payload.id
-            ? { ...task, listId: action.payload.listId}
-            : task
-        )
-      };
+        tasks: action.payload,
+        loading: false
 
-      case PATCH_TASKS:
+      }
+      case PATCH_TASK:
+        const index = state.tasks.findIndex(task => task.id === action.payload.id);
+        if (index !== -1) {
+          console.log(action.payload);
+          
+          const updatedTasks = [...state.tasks];
+          updatedTasks[index] = action.payload;
+  
+          return {
+            ...state,
+            tasks: [...updatedTasks],
+            loading: false
+          };
+        } else {
+          return state;
+        }
+    
       return {
         ...state,
-        tasks: [...action.payload.tasks]
-      };
+        tasks: action.payload,
+        loading: false
 
-    case ADD_TASK:
-      return {
-        ...state,
-        tasks: [
-          ...state.tasks,
-          { id: state.tasks.length, createdAt: new Date(), listId: 0, title: "new Date()" }
-        ]
-      };
-
-    case DELETE_TASK:
-      return {
-        ...state,
-        tasks: state.tasks.filter(task => task.id !== action.payload)
-      };
+      }
 
     default:
       return state;
