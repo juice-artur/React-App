@@ -1,4 +1,4 @@
-import { GET_TASKS } from '../Store/actionType';
+import { GET_TASKS, PATCH_TASK } from '../Store/actionType';
 import axios from 'axios'
 import { Dispatch } from 'redux';
 
@@ -13,6 +13,27 @@ export const getAllTasks = () => async (dispatch: Dispatch) => {
       })
   }
   catch(e){
+      dispatch( {
+        payload: console.log(e),
+        type: 'ERROR_OCCURRED'
+      })
+  }
+}
+
+export const patchTask = (updatedTaskData: any) => async (dispatch: Dispatch) => {
+    
+  try {    
+      const baseurl = import.meta.env.VITE_API_BASE_URL
+      const res = await axios.patch(`${baseurl}/tasks/${updatedTaskData.id}`, updatedTaskData, {
+      }); 
+      console.log(res);
+      
+      dispatch( {
+        type: PATCH_TASK,
+        payload: res.data
+    })   
+  } 
+  catch(e) {
       dispatch( {
         payload: console.log(e),
         type: 'ERROR_OCCURRED'

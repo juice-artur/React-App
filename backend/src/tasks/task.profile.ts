@@ -12,18 +12,16 @@ export class TaskProfile extends AutomapperProfile {
 
     override get profile() {
         return (mapper) => {
-            createMap(mapper, Task, TaskDto, forMember((dest)=> dest.columnId, mapFrom((source) =>  
-            {console.log(source);
-            
-            return  source.column.id;
-            }, 
+            createMap(mapper, Task, TaskDto, forMember((dest) => dest.columnId, mapFrom((source) => {
+                return source.column.id;
+            },
             )),
-            forMember(dest => dest.id, mapFrom(src => src.id))
-            ,forMember(dest => dest.title, mapFrom(src => src.title))
-            ,forMember(dest => dest.description, mapFrom(src => src.description))
-            ,forMember(dest => dest.position, mapFrom(src => src.position))
-            ,forMember(dest => dest.created_at, mapFrom(src => src.created_at))
-            ,forMember(dest => dest.updated_at, mapFrom(src => src.updated_at)))
+                forMember(dest => dest.id, mapFrom(src => src.id)),
+                forMember(dest => dest.title, mapFrom(src => src.title)),
+                forMember(dest => dest.description, mapFrom(src => src.description)),
+                forMember(dest => dest.position, mapFrom(src => src.position)),
+                forMember(dest => dest.created_at, mapFrom(src => src.created_at)),
+                forMember(dest => dest.updated_at, mapFrom(src => src.updated_at))) 
         };
     }
 }

@@ -4,6 +4,7 @@ import { Task } from './entities/task.entity';
 import { ApiParam } from '@nestjs/swagger';
 import { MapInterceptor } from '@automapper/nestjs';
 import { TaskDto } from './dto/task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 
 
 @Controller('/tasks')
@@ -30,7 +31,8 @@ export class TasksController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTaskDto: TaskDto) {
+  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+    console.log(updateTaskDto)
     return this.tasksService.update(+id, updateTaskDto);
   }
 
