@@ -9,7 +9,6 @@ import { InjectMapper } from '@automapper/nestjs';
 import { TaskDto } from './dto/task.dto';
 
 import { TaskColumn } from 'src/task-columns/entities/task-column.entity';
-import { log } from 'console';
 
 @Injectable()
 export class TasksService {
@@ -23,8 +22,22 @@ export class TasksService {
   ) { 
   }
 
-  create(createTaskDto: TaskDto) {
-    return 'This action adds a new task';
+  async create(createTaskDto: CreateTaskDto) : Promise<TaskDto | undefined> {
+    const { columnId, ...taskData } = createTaskDto;
+
+    const column = await this.taskColumnRepository.findOne({
+      where: { id : columnId }});
+    if (!column) {
+      throw new Error(`TaskColumn with ID ${columnId} not found`);
+    }
+     let tasksInTargerColumn = await (await this.taskRepository.find({relations: ['column']}))
+     .filter((t:Task) => t.column.id == columnId).sort((prev:Task, curr:Task) => prev.position - curr.position);
+     let targetPos =  tasksInTargerColumn.length > 0 ? tasksInTargerColumn[0].position / 2 : 1000;
+     taskData.position = targetPos;
+    const newTask = this.taskRepository.create({ ...taskData, column });
+    
+    const savedTask = await this.taskRepository.save(newTask);
+    return this.classMapper.mapAsync( savedTask, Task, TaskDto );
   }
 
   async findAll(): Promise<TaskDto[] | undefined> {

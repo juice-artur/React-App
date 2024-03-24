@@ -1,8 +1,13 @@
 import { AutoMap } from "@automapper/classes";
 import { ApiProperty } from "@nestjs/swagger";
+import { PrimaryGeneratedColumn } from "typeorm";
 
 export class CreateTaskDto 
 {  
+    @AutoMap()
+    @PrimaryGeneratedColumn()
+    id: number;
+    
     @AutoMap()
     @ApiProperty({nullable: true })
     title: string;
@@ -18,13 +23,7 @@ export class CreateTaskDto
     @AutoMap()
     @ApiProperty({nullable: true })
     created_at: Date;
-  
-  
-    @AutoMap()
-    @ApiProperty({nullable: true })
-    updated_at: Date;
-  
-    
+      
     @ApiProperty({nullable: true })
     columnId: number; 
 }

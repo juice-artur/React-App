@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors  } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { Task } from './entities/task.entity';
 import { ApiParam } from '@nestjs/swagger';
-import { MapInterceptor } from '@automapper/nestjs';
 import { TaskDto } from './dto/task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { CreateTaskDto } from './dto/create-task.dto';
+import { Task } from './entities/task.entity';
 
 
 @Controller('/tasks')
@@ -12,7 +12,7 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Post()
-  create(@Body() createTaskDto: TaskDto) {
+  create(@Body() createTaskDto: CreateTaskDto) : Promise<TaskDto>{
     return this.tasksService.create(createTaskDto);
   }
 

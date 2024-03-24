@@ -26,6 +26,8 @@ const Homepage = () => {
         if (!destination) {
             return;
         }
+        console.log(result);
+        
         
         if (result.type === 'COLUMN' && source.index !== destination.index) {
 
@@ -44,7 +46,7 @@ const Homepage = () => {
                 targetPosition = columnnsBefforeMove[0].position / 2;
             }
             else {
-                targetPosition = (columnnsBefforeMove[destination.index - 1].position + columnnsBefforeMove[destination.index + 1].position) / 2
+                targetPosition = (columnnsBefforeMove[destination.index - 1].position + columnnsBefforeMove[destination.index].position) / 2
             }
 
                 const updatedColumn = { ...movedColumn, position: targetPosition };
@@ -53,12 +55,9 @@ const Homepage = () => {
                     dispatch(patchColumn(updatedColumn));
                     return;
                 }
-            } else {
-                console.error('Task not found or not an object');
-            return;
-        }
+            } 
 
-        if (source.droppableId === destination.droppableId &&
+        else if (source.droppableId === destination.droppableId &&
             source.index !== destination.index) {
             const movedTask = tasks.find((t: Task) => t.title + t.id === draggableId);
             let columntasks = tasks.filter((t: Task) => t.columnId == movedTask.columnId).sort((f: Task, s: Task) =>  f.position -  s.position)
@@ -74,7 +73,7 @@ const Homepage = () => {
                 targetPosition = columntasks[0].position / 2;
             }
             else {
-                targetPosition = (columntasks[destination.index - 1].position + columntasks[destination.index + 1].position) / 2
+                targetPosition = (columntasks[destination.index - 1].position + columntasks[destination.index].position) / 2
             }
 
 
@@ -105,7 +104,10 @@ const Homepage = () => {
                 targetPosition = columntasks[0].position / 2;
             }
             else {
-                targetPosition = (columntasks[destination.index - 1].position + columntasks[destination.index + 1].position) / 2
+                console.log(columntasks);
+                console.log(destination);
+                
+                targetPosition = (columntasks[destination.index - 1].position + columntasks[destination.index].position) / 2
             }
 
 

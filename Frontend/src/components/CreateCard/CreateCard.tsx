@@ -26,18 +26,17 @@ const CreateCard: React.FC<CreateCardProps> = ({ classNames = [] }) => {
     return (
         <Draggable key={"CreateCard"} draggableId={"CreateCard"} index={0} isDragDisabled={true}>
             {(provided) => (
-                <div
-                    className={`border-dashed border-2 border-gray-400 flex ${classNames.join(' ')}`}
+                <div onClick={openModal}
+                    className={`border-dashed border-2 border-gray-400 flex cursor-pointer ${classNames.join(' ')}`}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                 >
-                    <button onClick={openModal}>
-                        <div className="flex items-center">
-                            <FaPlus className="mx-2" />
-                            <h1>Add new card</h1>
-                        </div>
-                    </button>
+
+                    <div className="flex items-center">
+                        <FaPlus className="mx-2" />
+                        <h1>Add new card</h1>
+                    </div>
 
                     <CreateTaskModal
                         isOpen={isModalOpen}

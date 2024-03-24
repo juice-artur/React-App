@@ -1,3 +1,4 @@
+import { AutoMap } from "@automapper/classes";
 import { Task } from "src/tasks/entities/task.entity";
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 
@@ -11,8 +12,9 @@ export class TaskColumn {
 
   @Column({ nullable: true })
   description: string;
-
-  @Column()
+  
+  @AutoMap()
+  @Column('float', { nullable: true })
   position: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

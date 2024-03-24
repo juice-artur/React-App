@@ -19,7 +19,7 @@ export class Task {
   description: string;
 
   @AutoMap()
-  @Column()
+  @Column('float', { nullable: true })
   position: number;
 
 
