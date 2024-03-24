@@ -48,7 +48,7 @@ const Card = ({ task, index }: { task: Task; index: number }) => {
               {editedTitle}
             </h3>
           )}
-          <p className="text-gray-600 text-sm">{task.description.length > 100 ? `${task.description.slice(0, 100)}...` : task.description}</p>
+          <p className="text-gray-600 text-sm">{task.description?.length > 100 ? `${task.description.slice(0, 100)}...` : task.description}</p>
           <div className="flex items-center mt-2">
             <FaCalendar className="text-gray-400 mr-2" />
             <p className="text-gray-400 text-xs">

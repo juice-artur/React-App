@@ -3,10 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { ColumnData } from "../types/ColumnData";
 import Column from "./Column";
 import { Task } from "../types/Task";
-import { patchColumn } from "../actions/columnAction";
 import { getAllTasks, patchTask } from "../utils/tasksServer";
 import { useEffect } from "react";
-import { getAllTaskColumns } from "../utils/taskColumsServer";
+import { getAllTaskColumns, patchColumn } from "../utils/taskColumsServer";
 
 
 
@@ -27,34 +26,42 @@ const Homepage = () => {
         if (!destination) {
             return;
         }
+        
         if (result.type === 'COLUMN' && source.index !== destination.index) {
 
             const movedColumn = columns.find((c: ColumnData) => c.title + c.id === draggableId);
+            let columnnsBefforeMove = [...columns].sort((first: ColumnData, second: ColumnData) => first.position - second.position)
             if (!movedColumn) {
                 return;
             }
 
-            const newColumns = columns.map((col: ColumnData) => {
-                if (col.id === movedColumn.id) {
-                    return { ...col, columnPosition: destination.index };
-                }
-                else if (col.columnPosition <= destination.index && col.columnPosition >= source.index) {
-                    return { ...col, columnPosition: col.columnPosition - 1 };
-                }
-                else if (col.columnPosition >= destination.index && col.columnPosition <= source.index) {
-                    return { ...col, columnPosition: col.columnPosition + 1 };
-                }
-                return col;
-            });
+            let targetPosition = 0;
 
-            dispatch(patchColumn([...newColumns]));
+            if (destination.index === (columnnsBefforeMove.length - 1)) {
+                targetPosition = columnnsBefforeMove[columnnsBefforeMove.length - 1].position + 500;
+            }
+            else if (destination.index == 0) {
+                targetPosition = columnnsBefforeMove[0].position / 2;
+            }
+            else {
+                targetPosition = (columnnsBefforeMove[destination.index - 1].position + columnnsBefforeMove[destination.index + 1].position) / 2
+            }
+
+                const updatedColumn = { ...movedColumn, position: targetPosition };
+                
+                if (updatedColumn) {
+                    dispatch(patchColumn(updatedColumn));
+                    return;
+                }
+            } else {
+                console.error('Task not found or not an object');
             return;
         }
 
         if (source.droppableId === destination.droppableId &&
             source.index !== destination.index) {
             const movedTask = tasks.find((t: Task) => t.title + t.id === draggableId);
-            let columntasks = tasks.filter((t: Task) => t.columnId == movedTask.columnId).sort((f: Task, s: Task) => f.position - s.position)
+            let columntasks = tasks.filter((t: Task) => t.columnId == movedTask.columnId).sort((f: Task, s: Task) =>  f.position -  s.position)
 
             let targetPosition = 0;
             if (columntasks.length == 0) {
@@ -87,10 +94,11 @@ const Homepage = () => {
             const movedTask = tasks.find((t: Task) => t.title + t.id === draggableId);
             let columntasks = tasks.filter((t: Task) => t.columnId == targetListid).sort((f: Task, s: Task) => f.position - s.position)
             let targetPosition = 0;
+            
             if (columntasks.length == 0) {
                 targetPosition = 1000;
             }
-            else if (destination.index === (columntasks.length - 1)) {
+            else if (destination.index === (columntasks.length)) {
                 targetPosition = columntasks[columntasks.length - 1].position + 500;
             }
             else if (destination.index == 0) {
@@ -124,7 +132,7 @@ const Homepage = () => {
                             style={{ display: "flex" }}
                         >
                             {
-                                [...columns].sort((first: ColumnData, second: ColumnData) => first.columnPosition - second.columnPosition).map((column: ColumnData, index: number) => (
+                                [...columns].sort((first: ColumnData, second: ColumnData) => first.position - second.position).map((column: ColumnData, index: number) => (
                                     <Column key={column.id} columnData={column} index={index} />
                                 ))}
                             {provided.placeholder}

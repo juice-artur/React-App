@@ -34,13 +34,7 @@ const taskReducer = (state = initialState, action: any) => {
         } else {
           return state;
         }
-    
-      return {
-        ...state,
-        tasks: action.payload,
-        loading: false
-
-      }
+  
 
     default:
       return state;

@@ -4,6 +4,7 @@ import { UpdateTaskColumnDto } from './dto/update-task-column.dto';
 import { TaskColumn } from './entities/task-column.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { log } from 'console';
 
 @Injectable()
 export class TaskColumnsService {
@@ -34,7 +35,7 @@ export class TaskColumnsService {
       throw new Error(`Task with ID ${id} not found`);
     }
 
-
+    console.log(updateTaskColumnDto);
     taskColumnToUpdate.title = updateTaskColumnDto.title;
     taskColumnToUpdate.description = updateTaskColumnDto.description;
     taskColumnToUpdate.position = updateTaskColumnDto.position;

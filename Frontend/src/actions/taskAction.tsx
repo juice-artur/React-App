@@ -15,9 +15,5 @@ export const deleteTask = () => {
 };
 
 
-export const patchTask = (task: Task) => ({
-  type: PATCH_TASK,
-  payload: task 
-})
 
 

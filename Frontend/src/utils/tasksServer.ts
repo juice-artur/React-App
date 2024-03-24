@@ -39,5 +39,4 @@ export const patchTask = (updatedTaskData: any) => async (dispatch: Dispatch) =>
         type: 'ERROR_OCCURRED'
       })
   }
-
 }
