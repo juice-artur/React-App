@@ -2,25 +2,30 @@ import { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { FaPlus } from "react-icons/fa";
 import { CreateTaskModal } from "../ModalWindows/CreateTask/CreateTaskModal";
+import { CreateTask } from "../../types/Task";
+import { useDispatch } from "react-redux";
+import { createTask } from "../../utils/tasksServer";
 
 interface CreateCardProps {
     classNames?: string[];
+    columnId: number;
 }
 
-const CreateCard: React.FC<CreateCardProps> = ({ classNames = [] }) => {
+const CreateCard: React.FC<CreateCardProps> = ({ classNames = [],  columnId} : CreateCardProps) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const dispatch = useDispatch();
     const openModal = () => {
         setIsModalOpen(true);
     };
 
-    const closeModal = () => {
+    const closeModal = () => {        
         setIsModalOpen(false);
     };
 
-    const handleCreateTask = (taskTitle) => {
-        console.log('Creating task with title:', taskTitle);
+    const handleCreateTask = (task: CreateTask) => {
+        task.columnId = columnId
+        dispatch(createTask(task))
     };
 
     return (

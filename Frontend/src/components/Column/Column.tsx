@@ -23,7 +23,7 @@ const Column = ({ columnData, index }: { columnData: ColumnData; index: number }
                         <p className="font-semibold">{columnData.title}</p>
                     </div>
 
-                    <CreateCard classNames={["m-4", "relative", "h-16"]} />
+                    <CreateCard classNames = {["m-4", "relative", "h-16"]} columnId = {columnData.id} />
 
                     <Droppable droppableId={columnData.title + columnData.id} key={index}>
                         {(provided, snapshot) => (

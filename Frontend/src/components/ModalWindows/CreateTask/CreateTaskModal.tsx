@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
+import { CreateTask } from '../../../types/Task';
 
-export const CreateTaskModal = ({ isOpen, onClose, onCreateTask }) => {
+interface CreateTaskModalProps {
+  isOpen: boolean,
+  onCreateTask: (createdTask: CreateTask) => void;
+  onClose: () => void
+}
+
+export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onCreateTask, onClose }) => {
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [taskDate, setTaskDate] = useState('');
@@ -16,13 +23,16 @@ export const CreateTaskModal = ({ isOpen, onClose, onCreateTask }) => {
   const handleDateChange = (e) => {
     setTaskDate(e.target.value);
   };
+  const clearForm = () => {
+    setTaskTitle('');
+    setTaskDescription('');
+    setTaskDate('');
+  }
 
   const handleCreateTask = () => {
     if (taskTitle.trim() !== '') {
-      onCreateTask({ title: taskTitle, description: taskDescription, date: taskDate });
-      setTaskTitle('');
-      setTaskDescription('');
-      setTaskDate('');
+      onCreateTask({ title: taskTitle, description: taskDescription, columnId: 0});
+      clearForm();
       onClose();
     }
   };
@@ -68,13 +78,20 @@ export const CreateTaskModal = ({ isOpen, onClose, onCreateTask }) => {
               <div className="flex justify-end">
                 <button
                   className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mr-2"
-                  onClick={handleCreateTask}
+                  onClick= {(e) => {
+                    e.stopPropagation();
+                    handleCreateTask();
+                  }}
                 >
                   Create
                 </button>
                 <button
                   className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
-                  onClick={onClose}
+                  onClick={(e)  => {
+                    e.stopPropagation();
+                    onClose();
+                    clearForm();
+                  }}
                 >
                   Cancel
                 </button>

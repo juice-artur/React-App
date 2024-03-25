@@ -8,3 +8,11 @@ export interface Task {
     columnId: number;
 
   }
+
+
+  export interface CreateTask {
+    title: string;
+    description: string;
+    columnId: number;
+
+  }
