@@ -16,11 +16,12 @@ import { CreateTaskModal } from '../ModalWindows/CreateTask/CreateTaskModal';
 import { createTask } from '../../utils/tasksServer';
 
 const Column = ({ columnData, index }: { columnData: ColumnData; index: number }) => {
-    enum Action {
+
+    enum ColumnAction {
         DELETE,
         EDIT_TITLE,
         ADD_CARD,
-    }
+      }
 
     const tasks = useSelector((state: any) => state.taskReducer.tasks);
     const dispatch = useDispatch();
@@ -39,27 +40,27 @@ const Column = ({ columnData, index }: { columnData: ColumnData; index: number }
         dispatch(createTask(task))
     };
     const dropdownItem = [
-        { title: <div className='flex items-center'><FaEdit className='mr-2' /> Edit</div>, id: Action.EDIT_TITLE },
-        { title: <div className='flex items-center'><FaPlus className='mr-2' /> Add new card</div>, id: Action.ADD_CARD },
-        { title: <div className='text-red-800 flex items-center'><FaTrashCan className='mr-2' /> Delete</div>, id: Action.DELETE }
+        { title: <div className='flex items-center'><FaEdit className='mr-2' /> Edit</div>, id: ColumnAction.EDIT_TITLE },
+        { title: <div className='flex items-center'><FaPlus className='mr-2' /> Add new card</div>, id: ColumnAction.ADD_CARD },
+        { title: <div className='text-red-800 flex items-center'><FaTrashCan className='mr-2' /> Delete</div>, id: ColumnAction.DELETE }
     ]
     const onSelect = (item: any) => {
-        if (item.id == Action.DELETE) {
+        if (item.id == ColumnAction.DELETE) {
             dispatch(deleteColumn(columnData.id))
         }
 
-        if(item.id == Action.ADD_CARD)
+        if(item.id == ColumnAction.ADD_CARD)
         {
             openModal();
         }
 
-        if(item.id == Action.EDIT_TITLE)
+        if(item.id == ColumnAction.EDIT_TITLE)
         {
             setFocusInput(true);
-            console.log("ssss");
             
         }
     }
+    
     const handleTitleSave = (newTitle) => {
         setFocusInput(false)
         dispatch(patchColumn({ ...columnData, title: newTitle }));

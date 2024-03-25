@@ -1,20 +1,43 @@
 import { Draggable } from "react-beautiful-dnd";
-import { FaCalendar } from "react-icons/fa";
+import { FaCalendar, FaEdit } from "react-icons/fa";
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { patchTask } from '../../utils/tasksServer';
+import { deleteTask, patchTask } from '../../utils/tasksServer';
 import ReactDropdown from '../dropdown/ReactDropdown';
 import { ColumnData } from '../../types/ColumnData';
 import EditableTitle from '../EditableTitle/EditableTitle';
+import { FaTrashCan } from "react-icons/fa6";
+import { BiDotsVerticalRounded } from "react-icons/bi";
 
 
 const Card = ({ task, index }) => {
+
+  enum CardAction {
+    DELETE,
+    EDIT,
+  }
   const dispatch = useDispatch();
   const columns = useSelector((state) => state.columnReducer.columns);
 
   const handleTitleSave = (newTitle) => {
-    dispatch(patchTask({...task, title: newTitle}));
+    dispatch(patchTask({ ...task, title: newTitle }));
   };
+
+  const dropdownItem = [
+    { title: <div className='flex items-center'><FaEdit className='mr-2' /> Edit</div>, id: CardAction.EDIT },
+    { title: <div className='text-red-800 flex items-center'><FaTrashCan className='mr-2' /> Delete</div>, id: CardAction.DELETE }
+  ]
+
+  const onSelect = (item: any) => {
+    if (item.id == CardAction.DELETE) {
+        dispatch(deleteTask(task.id))
+    }
+
+    if(item.id == CardAction.EDIT)
+    {
+        //setFocusInput(true);
+    }
+}
 
   return (
     <Draggable key={task.title} draggableId={task.title + task.id} index={index}>
@@ -25,10 +48,17 @@ const Card = ({ task, index }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <EditableTitle
-            initialTitle={task.title}
-            onSave={handleTitleSave}
-          />
+
+          <div
+            {...provided.dragHandleProps}
+            className="bg-gray-200 p-3 flex justify-between items-center border-b"
+          >
+            <EditableTitle
+              initialTitle={task.title}
+              onSave={handleTitleSave}
+            />
+            <ReactDropdown options={dropdownItem} onSelect={(item: any) => onSelect(item)} > <BiDotsVerticalRounded /> </ReactDropdown>
+          </div>
 
           <p className="text-gray-600 text-sm">{task.description?.length > 100 ? `${task.description.slice(0, 100)}...` : task.description}</p>
           <div className="flex items-center mt-2">
@@ -38,7 +68,7 @@ const Card = ({ task, index }) => {
             </p>
           </div>
 
-          <ReactDropdown  classNames={['mt-2', "px-4" ,'border', 'border-gray-300', 'w-full']} options={columns} onSelect={(targetColumn: ColumnData)=> {
+          <ReactDropdown  classNames={['mt-2', "px-4",'border', 'border-gray-300', 'w-full']} options={columns} onSelect={(targetColumn: ColumnData)=> {
             dispatch(patchTask({...task, columnId: targetColumn.id}))
           }}>MOVE TO:  </ReactDropdown>
         </div>

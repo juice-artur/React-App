@@ -1,4 +1,4 @@
-import { CREATE_TASK, GET_TASKS, PATCH_TASK } from '../Store/actionType';
+import { CREATE_TASK, DELETE_TASK, GET_TASKS, PATCH_TASK } from '../Store/actionType';
 import axios from 'axios'
 import { Dispatch } from 'redux';
 import { CreateTask } from '../types/Task';
@@ -61,5 +61,24 @@ export const createTask = (createTask: CreateTask) => async (dispatch: Dispatch)
   }
 }
 
+
+export const deleteTask = (deleteTaskId: number) => async (dispatch: Dispatch) => {
+    
+  try {    
+      const baseurl = import.meta.env.VITE_API_BASE_URL
+      const res = await axios.delete(`${baseurl}/tasks/${deleteTaskId}`); 
+      
+      dispatch( {
+        type: DELETE_TASK,
+        payload: deleteTaskId
+    })   
+  } 
+  catch(e) {
+      dispatch( {
+        payload: console.log(e),
+        type: 'ERROR_OCCURRED'
+      })
+  }
+}
 
 

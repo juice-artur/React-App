@@ -35,7 +35,7 @@ const ReactDropdown: React.FC<DropdownProps> = (props) => {
       {isOpen && (
         <div
           id="dropdown"
-          className="z-10 absolute mt-2 bg-white divide-y divide-gray-100 rounded-lg  w-44 dark:bg-gray-200"
+          className="z-10 fixed mt-2 bg-white divide-y divide-gray-100 rounded-lg  w-44 dark:bg-gray-200"
         >
           <ul className="py-2 text-sm text-gray-700 dark:text-gray-600" aria-labelledby="dropdownDefaultButton">
             {props.options.map((option) => (
