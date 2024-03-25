@@ -1,5 +1,5 @@
 import { ColumnData } from "../types/ColumnData";
-import { CREATE_COLUMN, GET_COLUMNS, PATCH_COLUMN } from "./actionType";
+import { CREATE_COLUMN, DELETE_COLUMN, GET_COLUMNS, PATCH_COLUMN } from "./actionType";
 
 
 export interface ColumState {
@@ -42,6 +42,17 @@ const columnReducer = (state = initialState, action : any) => {
         return {
           ...state,
           columns: [...updatedColumn],
+          loading: false
+        };
+
+        case DELETE_COLUMN:
+        const columnAfterDelete = [...state.columns]
+        .filter((column: ColumnData) => column.id != action.payload)
+        .sort((first: ColumnData, second: ColumnData) => first.position - second.position);
+
+        return {
+          ...state,
+          columns: [...columnAfterDelete],
           loading: false
         };
     default:

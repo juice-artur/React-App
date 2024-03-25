@@ -43,7 +43,6 @@ export class TaskColumnsService {
       throw new Error(`Task with ID ${id} not found`);
     }
 
-    console.log(updateTaskColumnDto);
     taskColumnToUpdate.title = updateTaskColumnDto.title;
     taskColumnToUpdate.description = updateTaskColumnDto.description;
     taskColumnToUpdate.position = updateTaskColumnDto.position;
@@ -53,7 +52,7 @@ export class TaskColumnsService {
     return await this.taskColumnRepository.save(taskColumnToUpdate);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} taskColumn`;
+  async remove(id: number) {
+    await this.taskColumnRepository.delete(id);
   }
 }

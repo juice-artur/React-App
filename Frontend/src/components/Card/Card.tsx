@@ -57,9 +57,9 @@ const Card = ({ task, index }: { task: Task; index: number }) => {
             </p>
           </div>
 
-          <ReactDropdown <ColumnData>  classNames={['mt-2']} options={columns} onSelect={(targetColumn: ColumnData)=> {
+          <ReactDropdown  classNames={['mt-2', "px-4" ,'border', 'border-gray-300']} options={columns} onSelect={(targetColumn: ColumnData)=> {
             dispatch(patchTask({...task, columnId: targetColumn.id}))
-          }}> </ReactDropdown>
+          }}>MOVE TO:  </ReactDropdown>
         </div>
       )}
     </Draggable>

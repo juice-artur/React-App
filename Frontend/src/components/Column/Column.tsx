@@ -4,10 +4,28 @@ import { Task } from '../../types/Task';
 import Card from '../Card/Card';
 import { ColumnData } from '../../types/ColumnData';
 import CreateCard from '../CreateCard/CreateCard';
+import ReactDropdown from '../dropdown/ReactDropdown';
+import { BiDotsVerticalRounded } from 'react-icons/bi';
+import { FaTrashCan } from 'react-icons/fa6';
+import { deleteColumn } from '../../utils/taskColumsServer';
+import { useDispatch } from 'react-redux';
 
 const Column = ({ columnData, index }: { columnData: ColumnData; index: number }) => {
-    const tasks = useSelector((state: any) => state.taskReducer.tasks);
+    enum Action {
+        DELETE,
+      }
 
+
+    const tasks = useSelector((state: any) => state.taskReducer.tasks);
+    const dispatch = useDispatch();
+    const dropdownItem = [{ title: <div className='text-red-800 flex items-center'><FaTrashCan className='mr-2'/> Delete</div>, id: Action.DELETE}]
+    const onSelect = (item: any) =>
+    {
+        if(item.id == Action.DELETE)
+        {
+            dispatch(deleteColumn(columnData.id))
+        }
+    }
     return (
         <Draggable draggableId={columnData.title + columnData.id} index={index}>
             {(provided, snapshot) => (
@@ -21,6 +39,7 @@ const Column = ({ columnData, index }: { columnData: ColumnData; index: number }
                         className="bg-gray-200 p-3 flex justify-between items-center border-b"
                     >
                         <p className="font-semibold">{columnData.title}</p>
+                        <ReactDropdown options={dropdownItem} onSelect={ (item: any) => onSelect(item)} > <BiDotsVerticalRounded/> </ReactDropdown>
                     </div>
 
                     <CreateCard classNames = {["m-4", "relative", "h-16"]} columnId = {columnData.id} />

@@ -23,7 +23,7 @@ export class TaskColumn {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updated_at: Date;
 
-  @OneToMany(() => Task, task => task.column)
+  @OneToMany(() => Task, task => task.column, {cascade: true})
   task: Task[];
 }
 
