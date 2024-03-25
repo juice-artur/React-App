@@ -9,7 +9,7 @@ import { InjectMapper } from '@automapper/nestjs';
 import { TaskDto } from './dto/task.dto';
 
 import { TaskColumn } from 'src/task-columns/entities/task-column.entity';
-import { log } from 'console';
+
 
 @Injectable()
 export class TasksService {
@@ -17,14 +17,28 @@ export class TasksService {
     @InjectRepository(Task)
     private taskRepository: Repository<Task>,
 
-    @InjectRepository(Task)
+    @InjectRepository(TaskColumn)
     private taskColumnRepository : Repository<TaskColumn>,
     @InjectMapper()  private classMapper:  Mapper,
   ) { 
   }
 
-  create(createTaskDto: TaskDto) {
-    return 'This action adds a new task';
+  async create(createTaskDto: CreateTaskDto) : Promise<TaskDto | undefined> {
+    const { columnId, ...taskData } = createTaskDto;
+    console.log(await this.taskColumnRepository.find())
+    const column = await this.taskColumnRepository.findOne({
+      where: { id : columnId }});
+    if (!column) {
+      throw new Error(`TaskColumn with ID ${columnId} not found`);
+    }
+     let tasksInTargerColumn = await (await this.taskRepository.find({relations: ['column']}))
+     .filter((t:Task) => t.column.id == columnId).sort((prev:Task, curr:Task) => prev.position - curr.position);
+     let targetPos =  tasksInTargerColumn.length > 0 ? tasksInTargerColumn[0].position / 2 : 1000;
+     taskData.position = targetPos;
+    const newTask = this.taskRepository.create({ ...taskData, column });
+    
+    const savedTask = await this.taskRepository.save(newTask);
+    return this.classMapper.mapAsync( savedTask, Task, TaskDto );
   }
 
   async findAll(): Promise<TaskDto[] | undefined> {
@@ -41,7 +55,6 @@ export class TasksService {
 
   async update(id: number, updateTaskDto: UpdateTaskDto) : Promise<TaskDto | undefined> {
     const { title, description, position, created_at, updated_at, columnId } = updateTaskDto;
-    console.log(updateTaskDto);
     const taskToUpdate = await this.taskRepository.findOne({
       where: { id },
       relations: ['column']

@@ -1,15 +1,15 @@
-import { CREATE_TASK, GET_TASKS, PATCH_TASK } from '../Store/actionType';
 import axios from 'axios'
 import { Dispatch } from 'redux';
-import { CreateTask } from '../types/Task';
+import { CREATE_COLUMN, GET_COLUMNS, PATCH_COLUMN } from '../Store/actionType';
+import { CreateColumnData } from '../types/ColumnData';
 
-export const getAllTasks = () => async (dispatch: Dispatch) => {
+export const getAllTaskColumns = () => async (dispatch: Dispatch) => {
     
   try{    
       const baseurl = import.meta.env.VITE_API_BASE_URL
-      const res = await axios.get(`${baseurl}/tasks`)      
+      const res = await axios.get(`${baseurl}/task-columns`)  
       dispatch( {
-          type: GET_TASKS,
+          type: GET_COLUMNS,
           payload: res.data
       })
   }
@@ -21,15 +21,15 @@ export const getAllTasks = () => async (dispatch: Dispatch) => {
   }
 }
 
-export const patchTask = (updatedTaskData: any) => async (dispatch: Dispatch) => {
+
+export const patchColumn = (updatedColumnData: any) => async (dispatch: Dispatch) => {
     
   try {    
       const baseurl = import.meta.env.VITE_API_BASE_URL
-      const res = await axios.patch(`${baseurl}/tasks/${updatedTaskData.id}`, updatedTaskData, {
-      }); 
-      
+      const res = await axios.patch(`${baseurl}/task-columns/${updatedColumnData.id}`, updatedColumnData, {
+      });       
       dispatch( {
-        type: PATCH_TASK,
+        type: PATCH_COLUMN,
         payload: res.data
     })   
   } 
@@ -41,15 +41,16 @@ export const patchTask = (updatedTaskData: any) => async (dispatch: Dispatch) =>
   }
 }
 
-export const createTask = (createTask: CreateTask) => async (dispatch: Dispatch) => {
+
+export const createColumn = (createColumn: CreateColumnData) => async (dispatch: Dispatch) => {
     
   try {    
       const baseurl = import.meta.env.VITE_API_BASE_URL
-      const res = await axios.post(`${baseurl}/tasks`, createTask, {
+      const res = await axios.post(`${baseurl}/task-columns`, createColumn, {
       }); 
       
       dispatch( {
-        type: CREATE_TASK,
+        type: CREATE_COLUMN,
         payload: res.data
     })   
   } 

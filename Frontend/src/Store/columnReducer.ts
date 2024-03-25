@@ -1,26 +1,49 @@
 import { ColumnData } from "../types/ColumnData";
-import { PATCH_COLUMN } from "./actionType";
+import { CREATE_COLUMN, GET_COLUMNS, PATCH_COLUMN } from "./actionType";
 
 
 export interface ColumState {
   columns: ColumnData[];
+  loading: boolean;
 }
 
 const initialState: ColumState = {
-  columns: [
-     { id: 0, columnPosition:0, title: "First colum"},
-     { id: 1,columnPosition:1,  title: "Secomd colum" },
-
-  ]
+  columns:  [],
+  loading: false,
 };
 
 const columnReducer = (state = initialState, action : any) => {
   switch (action.type) {
-    case PATCH_COLUMN:
+    case GET_COLUMNS:
       return {
         ...state,
-        columns: [...action.payload.columns]
-      };
+        columns: action.payload,
+        loading: false
+
+      }
+    case PATCH_COLUMN:      
+      const index = state.columns.findIndex(column => column.id === action.payload.id);
+      if (index !== -1) {
+        const updatedColumns = [...state.columns];
+        updatedColumns[index] = action.payload;
+
+        return {
+          ...state,
+          columns: [...updatedColumns],
+          loading: false
+        };
+      } else {
+        return state;
+      }
+
+      case CREATE_COLUMN:
+        const updatedColumn = [...state.columns, action.payload].sort((first: ColumnData, second: ColumnData) => first.position - second.position);
+
+        return {
+          ...state,
+          columns: [...updatedColumn],
+          loading: false
+        };
     default:
       return state;
   }

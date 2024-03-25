@@ -3,7 +3,7 @@ import { TaskColumnsService } from './task-columns.service';
 import { CreateTaskColumnDto } from './dto/create-task-column.dto';
 import { UpdateTaskColumnDto } from './dto/update-task-column.dto';
 
-@Controller('task-columns')
+@Controller('/task-columns')
 export class TaskColumnsController {
   constructor(private readonly taskColumnsService: TaskColumnsService) {}
 

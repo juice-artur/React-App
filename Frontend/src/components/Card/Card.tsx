@@ -6,6 +6,7 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { patchTask } from '../../utils/tasksServer';
 import ReactDropdown from '../dropdown/ReactDropdown';
+import { ColumnData } from '../../types/ColumnData';
 
 const Card = ({ task, index }: { task: Task; index: number }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -48,7 +49,7 @@ const Card = ({ task, index }: { task: Task; index: number }) => {
               {editedTitle}
             </h3>
           )}
-          <p className="text-gray-600 text-sm">{task.description.length > 100 ? `${task.description.slice(0, 100)}...` : task.description}</p>
+          <p className="text-gray-600 text-sm">{task.description?.length > 100 ? `${task.description.slice(0, 100)}...` : task.description}</p>
           <div className="flex items-center mt-2">
             <FaCalendar className="text-gray-400 mr-2" />
             <p className="text-gray-400 text-xs">
@@ -56,7 +57,9 @@ const Card = ({ task, index }: { task: Task; index: number }) => {
             </p>
           </div>
 
-          <ReactDropdown  classNames={['mt-2']} options={columns} onSelect={()=> {}}> </ReactDropdown>
+          <ReactDropdown <ColumnData>  classNames={['mt-2']} options={columns} onSelect={(targetColumn: ColumnData)=> {
+            dispatch(patchTask({...task, columnId: targetColumn.id}))
+          }}> </ReactDropdown>
         </div>
       )}
     </Draggable>

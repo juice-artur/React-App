@@ -1,9 +1,9 @@
 import { AutoMap } from "@automapper/classes";
-import { TaskColumn } from "src/task-columns/entities/task-column.entity";
+import { TaskColumn } from "../../task-columns/entities/task-column.entity";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 
 
-@Entity()
+@Entity({name: "task"})
 export class Task {
   
   @AutoMap()
@@ -19,7 +19,7 @@ export class Task {
   description: string;
 
   @AutoMap()
-  @Column()
+  @Column('float', { nullable: true })
   position: number;
 
 
@@ -31,7 +31,11 @@ export class Task {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updated_at: Date;
 
-  @ManyToOne(() => TaskColumn, taskColumn => taskColumn.tasks)
-  @JoinColumn({name: 'columnId'})
+  @AutoMap()
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  due_date: Date;
+
+  @ManyToOne(() => TaskColumn, taskColumn => taskColumn.task)
+  @JoinColumn({name: 'column_id'})
   column: TaskColumn;
 }

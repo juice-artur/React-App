@@ -1,4 +1,4 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TaskColumnsService } from './task-columns.service';
 import { TaskColumnsController } from './task-columns.controller';
 import { TaskColumn } from './entities/task-column.entity';

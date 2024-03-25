@@ -14,7 +14,11 @@
   docker compose build
   docker compose up
   ```
-* run migration
+* create migration
+  ```
+     typeorm migration:create migration_name
+  ```
+* To execute migration, use the following command:
   ```
     npm run migration:run
   ```

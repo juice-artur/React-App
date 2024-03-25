@@ -1,5 +1,5 @@
 import { Task } from "../types/Task";
-import { ADD_TASK, DELETE_TASK, GET_TASKS, PATCH_TASK } from "./actionType";
+import {CREATE_TASK, DELETE_TASK, GET_TASKS, PATCH_TASK } from "./actionType";
 
 export interface TaskState {
   tasks: Task[];
@@ -20,29 +20,28 @@ const taskReducer = (state = initialState, action: any) => {
         loading: false
 
       }
-      case PATCH_TASK:
-        const index = state.tasks.findIndex(task => task.id === action.payload.id);
-        if (index !== -1) {
-          console.log(action.payload);
-          
-          const updatedTasks = [...state.tasks];
-          updatedTasks[index] = action.payload;
-  
-          return {
-            ...state,
-            tasks: [...updatedTasks],
-            loading: false
-          };
-        } else {
-          return state;
-        }
-    
-      return {
-        ...state,
-        tasks: action.payload,
-        loading: false
+    case PATCH_TASK:
+      const index = state.tasks.findIndex(task => task.id === action.payload.id);
+      if (index !== -1) {
+        const updatedTasks = [...state.tasks];
+        updatedTasks[index] = action.payload;
 
+        return {
+          ...state,
+          tasks: [...updatedTasks],
+          loading: false
+        };
+      } else {
+        return state;
       }
+    case CREATE_TASK:
+        const updatedTasks = [...state.tasks, action.payload].sort((first: Task, second: Task) => first.position - second.position);
+
+        return {
+          ...state,
+          tasks: [...updatedTasks],
+          loading: false
+        };
 
     default:
       return state;
