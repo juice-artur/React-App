@@ -9,7 +9,7 @@ import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { FaTrashCan } from 'react-icons/fa6';
 import { deleteColumn, patchColumn } from '../../utils/taskColumsServer';
 import { useDispatch } from 'react-redux';
-import {  FaPlus } from 'react-icons/fa';
+import {  FaEdit, FaPlus } from 'react-icons/fa';
 import EditableTitle from '../EditableTitle/EditableTitle';
 import { useState } from 'react';
 import { CreateTaskModal } from '../ModalWindows/CreateTask/CreateTaskModal';
@@ -18,13 +18,14 @@ import { createTask } from '../../utils/tasksServer';
 const Column = ({ columnData, index }: { columnData: ColumnData; index: number }) => {
     enum Action {
         DELETE,
-        EDIT,
+        EDIT_TITLE,
         ADD_CARD,
     }
 
     const tasks = useSelector((state: any) => state.taskReducer.tasks);
     const dispatch = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [focusInput, setFocusInput] = useState(false);
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -34,10 +35,11 @@ const Column = ({ columnData, index }: { columnData: ColumnData; index: number }
     };
 
     const handleCreateTask = (task: CreateTask) => {
-        task.columnId = columnData.id
+        task.columnId = columnData.id;
         dispatch(createTask(task))
     };
     const dropdownItem = [
+        { title: <div className='flex items-center'><FaEdit className='mr-2' /> Edit</div>, id: Action.EDIT_TITLE },
         { title: <div className='flex items-center'><FaPlus className='mr-2' /> Add new card</div>, id: Action.ADD_CARD },
         { title: <div className='text-red-800 flex items-center'><FaTrashCan className='mr-2' /> Delete</div>, id: Action.DELETE }
     ]
@@ -50,10 +52,20 @@ const Column = ({ columnData, index }: { columnData: ColumnData; index: number }
         {
             openModal();
         }
+
+        if(item.id == Action.EDIT_TITLE)
+        {
+            setFocusInput(true);
+            console.log("ssss");
+            
+        }
     }
     const handleTitleSave = (newTitle) => {
+        setFocusInput(false)
         dispatch(patchColumn({ ...columnData, title: newTitle }));
     };
+
+
 
 
 
@@ -73,6 +85,7 @@ const Column = ({ columnData, index }: { columnData: ColumnData; index: number }
                             <EditableTitle
                                 initialTitle={columnData.title}
                                 onSave={handleTitleSave}
+                                focusInput={focusInput}
                             />
                             <ReactDropdown options={dropdownItem} onSelect={(item: any) => onSelect(item)} > <BiDotsVerticalRounded /> </ReactDropdown>
                         </div>
