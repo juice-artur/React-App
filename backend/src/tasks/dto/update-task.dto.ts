@@ -1,6 +1,7 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { CreateTaskDto } from './create-task.dto';
 import { AutoMap } from '@automapper/classes';
+import { Priority } from '../enums/priority.enum';
 
 export class UpdateTaskDto extends PartialType(CreateTaskDto)
  {
@@ -25,7 +26,11 @@ export class UpdateTaskDto extends PartialType(CreateTaskDto)
     @ApiProperty({nullable: true })
     updated_at: Date;
   
-    
+    @AutoMap()
     @ApiProperty({nullable: true })
     columnId: number; 
+
+    @AutoMap()
+    @ApiProperty({nullable: true })
+    priority: Priority;
  }

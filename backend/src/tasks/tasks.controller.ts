@@ -26,13 +26,11 @@ export class TasksController {
   @ApiParam({ name: 'id', description: 'Task ID' })
   async GetTaskById(@Param() params: any): Promise<TaskDto> | undefined {
     const task = await this.tasksService.findOne(params.id);
-
     return task ? task: undefined;
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
-    console.log(updateTaskDto)
     return this.tasksService.update(+id, updateTaskDto);
   }
 

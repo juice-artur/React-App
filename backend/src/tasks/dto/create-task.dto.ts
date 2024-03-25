@@ -1,6 +1,7 @@
 import { AutoMap } from "@automapper/classes";
 import { ApiProperty } from "@nestjs/swagger";
 import { PrimaryGeneratedColumn } from "typeorm";
+import { Priority } from "../enums/priority.enum";
 
 export class CreateTaskDto 
 {  
@@ -30,4 +31,7 @@ export class CreateTaskDto
       
     @ApiProperty({nullable: true })
     columnId: number; 
+
+    @ApiProperty({nullable: true })
+    priority: Priority;
 }

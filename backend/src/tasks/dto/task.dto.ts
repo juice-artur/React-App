@@ -1,5 +1,6 @@
 import { AutoMap } from '@automapper/classes';
 import { ApiProperty } from '@nestjs/swagger';
+import { Priority } from '../enums/priority.enum';
 export class TaskDto {
 
   @AutoMap()
@@ -27,7 +28,11 @@ export class TaskDto {
   @ApiProperty()
   updated_at: Date;
 
-  
+  @AutoMap()
   @ApiProperty()
   columnId: number; 
+
+  @AutoMap()
+  @ApiProperty({nullable: true })
+  priority: Priority;
 }
