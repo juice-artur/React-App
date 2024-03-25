@@ -48,8 +48,6 @@ const CreateCard: React.FC<CreateCardProps> = ({ classNames = [],  columnId} : C
                         onClose={closeModal}
                         onCreateTask={handleCreateTask}
                     />
-
-
                 </div>
             )}
         </Draggable>

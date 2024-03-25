@@ -25,10 +25,7 @@ const Homepage = () => {
 
         if (!destination) {
             return;
-        }
-        console.log(result);
-        
-        
+        }        
         if (result.type === 'COLUMN' && source.index !== destination.index) {
 
             const movedColumn = columns.find((c: ColumnData) => c.title + c.id === draggableId);
@@ -103,10 +100,7 @@ const Homepage = () => {
             else if (destination.index == 0) {
                 targetPosition = columntasks[0].position / 2;
             }
-            else {
-                console.log(columntasks);
-                console.log(destination);
-                
+            else {                
                 targetPosition = (columntasks[destination.index - 1].position + columntasks[destination.index].position) / 2
             }
 

@@ -6,3 +6,4 @@ export const GET_TASKS = "PATCH_TASKS";
 
 export const PATCH_COLUMN = "PATCH_COLUMN";
 export const GET_COLUMNS = "GET_COLUMNS"
+export const CREATE_COLUMN = "CREATE_COLUMN"

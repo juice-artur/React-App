@@ -14,5 +14,4 @@ export interface Task {
     title: string;
     description: string;
     columnId: number;
-
   }

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Dispatch } from 'redux';
-import { GET_COLUMNS, PATCH_COLUMN } from '../Store/actionType';
+import { CREATE_COLUMN, GET_COLUMNS, PATCH_COLUMN } from '../Store/actionType';
+import { CreateColumnData } from '../types/ColumnData';
 
 export const getAllTaskColumns = () => async (dispatch: Dispatch) => {
     
@@ -29,6 +30,27 @@ export const patchColumn = (updatedColumnData: any) => async (dispatch: Dispatch
       });       
       dispatch( {
         type: PATCH_COLUMN,
+        payload: res.data
+    })   
+  } 
+  catch(e) {
+      dispatch( {
+        payload: console.log(e),
+        type: 'ERROR_OCCURRED'
+      })
+  }
+}
+
+
+export const createColumn = (createColumn: CreateColumnData) => async (dispatch: Dispatch) => {
+    
+  try {    
+      const baseurl = import.meta.env.VITE_API_BASE_URL
+      const res = await axios.post(`${baseurl}/task-columns`, createColumn, {
+      }); 
+      
+      dispatch( {
+        type: CREATE_COLUMN,
         payload: res.data
     })   
   } 

@@ -3,3 +3,7 @@ export interface ColumnData {
     title:string;
     position: number
   }
+
+  export interface CreateColumnData {
+    title: string;
+  }
