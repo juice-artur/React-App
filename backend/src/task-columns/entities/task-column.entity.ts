@@ -1,5 +1,5 @@
 import { AutoMap } from "@automapper/classes";
-import { Task } from "src/tasks/entities/task.entity";
+import { Task } from "../../tasks/entities/task.entity";
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 
 @Entity()
@@ -24,6 +24,6 @@ export class TaskColumn {
   updated_at: Date;
 
   @OneToMany(() => Task, task => task.column)
-  tasks: Task[];
+  task: Task[];
 }
 

@@ -3,8 +3,8 @@ import { config as dotenvConfig } from 'dotenv';
 
 
 import { DataSource, DataSourceOptions } from "typeorm";
-import { Task } from 'src/tasks/entities/task.entity';
-import { TaskColumn } from 'src/task-columns/entities/task-column.entity';
+import { Task } from '../tasks/entities/task.entity';
+import { TaskColumn } from '../task-columns/entities/task-column.entity';
 
 dotenvConfig({ path: '.env' });
 
@@ -16,10 +16,12 @@ const config = {
     password: `${process.env.DATABASE_PASSWORD}`,
     database: `${process.env.DATABASE_NAME}`,
     entities: [Task, TaskColumn],
-    migrations: ["../migrations/*{.ts,.js}"],
+    migrations: ["dist/migrations/*{.ts,.js}"],
     autoLoadEntities: true,
-    synchronize: true,
+    synchronize: false,
     migrationsRun: true,
+    migrationsTableName: "migrations"
+    
 }
 
 export default registerAs('typeorm', () => config)

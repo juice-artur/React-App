@@ -4,12 +4,12 @@ export class ChangeDataTypeForPosition1711315738374 implements MigrationInterfac
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-        ALTER TABLE tasks
+        ALTER TABLE task
         ALTER COLUMN position TYPE FLOAT;
     `);
 
         await queryRunner.query(`
-        ALTER TABLE task_columns
+        ALTER TABLE task_column
         ALTER COLUMN position TYPE FLOAT;
     `);
     }
@@ -17,12 +17,12 @@ export class ChangeDataTypeForPosition1711315738374 implements MigrationInterfac
     public async down(queryRunner: QueryRunner): Promise<void> {
 
         await queryRunner.query(`
-        ALTER TABLE tasks
+        ALTER TABLE task
         ALTER COLUMN position TYPE INTEGER; 
     `);
 
         await queryRunner.query(`
-        ALTER TABLE task_columns
+        ALTER TABLE task_column
         ALTER COLUMN position TYPE INTEGER; 
     `);
     }

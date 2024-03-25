@@ -10,13 +10,14 @@ import { TaskDto } from './dto/task.dto';
 
 import { TaskColumn } from 'src/task-columns/entities/task-column.entity';
 
+
 @Injectable()
 export class TasksService {
   constructor(
     @InjectRepository(Task)
     private taskRepository: Repository<Task>,
 
-    @InjectRepository(Task)
+    @InjectRepository(TaskColumn)
     private taskColumnRepository : Repository<TaskColumn>,
     @InjectMapper()  private classMapper:  Mapper,
   ) { 
@@ -24,7 +25,7 @@ export class TasksService {
 
   async create(createTaskDto: CreateTaskDto) : Promise<TaskDto | undefined> {
     const { columnId, ...taskData } = createTaskDto;
-
+    console.log(await this.taskColumnRepository.find())
     const column = await this.taskColumnRepository.findOne({
       where: { id : columnId }});
     if (!column) {
