@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const EditableTitle = ({ initialTitle, onSave }) => {
-  const [isEditing, setIsEditing] = useState(false);
+const EditableTitle = ({ initialTitle, onSave, isOpen }) => {
+  const [isEditing, setIsEditing] = useState(isOpen);
   const [editedTitle, setEditedTitle] = useState(initialTitle);
 
   const handleEdit = () => {

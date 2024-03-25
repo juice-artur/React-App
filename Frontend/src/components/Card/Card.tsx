@@ -1,4 +1,3 @@
-import React from 'react';
 import { Draggable } from "react-beautiful-dnd";
 import { FaCalendar } from "react-icons/fa";
 import moment from 'moment';

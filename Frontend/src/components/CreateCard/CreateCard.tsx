@@ -12,9 +12,8 @@ interface CreateCardProps {
 }
 
 const CreateCard: React.FC<CreateCardProps> = ({ classNames = [],  columnId} : CreateCardProps) => {
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const dispatch = useDispatch();
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => {
         setIsModalOpen(true);
     };

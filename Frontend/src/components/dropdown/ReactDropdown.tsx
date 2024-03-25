@@ -9,7 +9,7 @@ interface DropdownProps {
   options: Option[];
   onSelect: (option: Option) => void;
   classNames?: string[];
-  children: ReactNode 
+  children: ReactNode
 }
 
 const ReactDropdown: React.FC<DropdownProps> = (props) => {
