@@ -7,25 +7,35 @@ import CreateCard from '../CreateCard/CreateCard';
 import ReactDropdown from '../dropdown/ReactDropdown';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { FaTrashCan } from 'react-icons/fa6';
-import { deleteColumn } from '../../utils/taskColumsServer';
+import { deleteColumn, patchColumn } from '../../utils/taskColumsServer';
 import { useDispatch } from 'react-redux';
+import { FaEdit } from 'react-icons/fa';
+import EditableTitle from '../EditableTitle/EditableTitle';
 
 const Column = ({ columnData, index }: { columnData: ColumnData; index: number }) => {
     enum Action {
         DELETE,
-      }
-
+        EDIT,
+    }
 
     const tasks = useSelector((state: any) => state.taskReducer.tasks);
     const dispatch = useDispatch();
-    const dropdownItem = [{ title: <div className='text-red-800 flex items-center'><FaTrashCan className='mr-2'/> Delete</div>, id: Action.DELETE}]
-    const onSelect = (item: any) =>
-    {
-        if(item.id == Action.DELETE)
-        {
+    const dropdownItem = [
+        { title: <div className='flex items-center'><FaEdit className='mr-2' /> Edit</div>, id: Action.EDIT },
+        { title: <div className='text-red-800 flex items-center'><FaTrashCan className='mr-2' /> Delete</div>, id: Action.DELETE }
+    ]
+    const onSelect = (item: any) => {
+        if (item.id == Action.DELETE) {
             dispatch(deleteColumn(columnData.id))
         }
+        if (item.id == Action.EDIT) {
+
+        }
     }
+    const handleTitleSave = (newTitle) => {
+        dispatch(patchColumn({...columnData, title: newTitle}));
+      };
+
     return (
         <Draggable draggableId={columnData.title + columnData.id} index={index}>
             {(provided, snapshot) => (
@@ -38,11 +48,14 @@ const Column = ({ columnData, index }: { columnData: ColumnData; index: number }
                         {...provided.dragHandleProps}
                         className="bg-gray-200 p-3 flex justify-between items-center border-b"
                     >
-                        <p className="font-semibold">{columnData.title}</p>
-                        <ReactDropdown options={dropdownItem} onSelect={ (item: any) => onSelect(item)} > <BiDotsVerticalRounded/> </ReactDropdown>
+                        <EditableTitle
+                            initialTitle={columnData.title}
+                            onSave={handleTitleSave}
+                        />
+                        <ReactDropdown options={dropdownItem} onSelect={(item: any) => onSelect(item)} > <BiDotsVerticalRounded /> </ReactDropdown>
                     </div>
 
-                    <CreateCard classNames = {["m-4", "relative", "h-16"]} columnId = {columnData.id} />
+                    <CreateCard classNames={["m-4", "relative", "h-16"]} columnId={columnData.id} />
 
                     <Droppable droppableId={columnData.title + columnData.id} key={index}>
                         {(provided, snapshot) => (

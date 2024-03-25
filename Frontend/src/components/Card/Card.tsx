@@ -1,30 +1,22 @@
-import { useState } from 'react';
+import React from 'react';
 import { Draggable } from "react-beautiful-dnd";
-import { Task } from "../../types/Task";
 import { FaCalendar } from "react-icons/fa";
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { patchTask } from '../../utils/tasksServer';
 import ReactDropdown from '../dropdown/ReactDropdown';
 import { ColumnData } from '../../types/ColumnData';
+import EditableTitle from '../EditableTitle/EditableTitle';
 
-const Card = ({ task, index }: { task: Task; index: number }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedTitle, setEditedTitle] = useState(task.title);
+
+const Card = ({ task, index }) => {
   const dispatch = useDispatch();
-  const handleEdit = () => {
-    setIsEditing(true);
+  const columns = useSelector((state) => state.columnReducer.columns);
+
+  const handleTitleSave = (newTitle) => {
+    dispatch(patchTask({...task, title: newTitle}));
   };
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEditedTitle(event.target.value);
-  };
-
-  const handleTitleSave = () => {
-    setIsEditing(false);    
-    dispatch(patchTask({...task, title: editedTitle}))
-  };
-  const columns = useSelector((state: any) => state.columnReducer.columns);
   return (
     <Draggable key={task.title} draggableId={task.title + task.id} index={index}>
       {(provided) => (
@@ -34,21 +26,11 @@ const Card = ({ task, index }: { task: Task; index: number }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          {isEditing ? (
-            <input
-              type="text"
-              value={editedTitle}
-              onChange={handleTitleChange}
-              onBlur={handleTitleSave}
-              autoFocus
-              className="text-xl font-bold mb-2 outline-none border-b border-gray-400 "
-              style={{ width: "100%" }}
-            />
-          ) : (
-            <h3 className="text-xl font-bold mb-2 cursor-pointer" onClick={handleEdit}>
-              {editedTitle}
-            </h3>
-          )}
+          <EditableTitle
+            initialTitle={task.title}
+            onSave={handleTitleSave}
+          />
+
           <p className="text-gray-600 text-sm">{task.description?.length > 100 ? `${task.description.slice(0, 100)}...` : task.description}</p>
           <div className="flex items-center mt-2">
             <FaCalendar className="text-gray-400 mr-2" />
@@ -57,7 +39,7 @@ const Card = ({ task, index }: { task: Task; index: number }) => {
             </p>
           </div>
 
-          <ReactDropdown  classNames={['mt-2', "px-4" ,'border', 'border-gray-300']} options={columns} onSelect={(targetColumn: ColumnData)=> {
+          <ReactDropdown  classNames={['mt-2', "px-4" ,'border', 'border-gray-300', 'w-full']} options={columns} onSelect={(targetColumn: ColumnData)=> {
             dispatch(patchTask({...task, columnId: targetColumn.id}))
           }}>MOVE TO:  </ReactDropdown>
         </div>
