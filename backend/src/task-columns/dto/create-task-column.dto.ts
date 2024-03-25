@@ -8,7 +8,7 @@ export class CreateTaskColumnDto
   @Column({ nullable: true })
   description: string;
 
-  @Column()
+  @Column({ nullable: true })
   position: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

@@ -23,6 +23,10 @@ export class CreateTaskDto
     @AutoMap()
     @ApiProperty({nullable: true })
     created_at: Date;
+
+    @AutoMap()
+    @ApiProperty({nullable: true })
+    due_date: Date;
       
     @ApiProperty({nullable: true })
     columnId: number; 

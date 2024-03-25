@@ -11,8 +11,17 @@ export class TaskColumnsService {
   constructor(
     @InjectRepository(TaskColumn)
     private taskColumnRepository: Repository<TaskColumn>) { }
-  create(createTaskColumnDto: CreateTaskColumnDto) {
-    return 'This action adds a new taskColumn';
+
+  async create(createTaskColumnDto: CreateTaskColumnDto) {
+     let Columnn = await  (await this.taskColumnRepository.find())
+     .sort((prev:TaskColumn, curr:TaskColumn) => prev.position - curr.position);
+     
+     let targetPos =  Columnn.length > 0 ? Columnn[0].position / 2 : 1000;
+     createTaskColumnDto.position = targetPos;
+    const newColumn = this.taskColumnRepository.create({ ...createTaskColumnDto });
+    
+    const savedTask = await this.taskColumnRepository.save(newColumn);
+    return savedTask;
   }
 
   findAll() {

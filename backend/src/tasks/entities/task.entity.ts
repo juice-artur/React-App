@@ -31,6 +31,10 @@ export class Task {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updated_at: Date;
 
+  @AutoMap()
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  due_date: Date;
+
   @ManyToOne(() => TaskColumn, taskColumn => taskColumn.task)
   @JoinColumn({name: 'column_id'})
   column: TaskColumn;
