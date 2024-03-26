@@ -1,4 +1,4 @@
-import { Task } from "src/tasks/entities/task.entity";
+import { Task } from "../../tasks/entities/task.entity";
 import { PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, Entity } from "typeorm";
 
 @Entity({name : "history_of_changes_task"})

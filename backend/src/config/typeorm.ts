@@ -5,8 +5,8 @@ import { config as dotenvConfig } from 'dotenv';
 import { DataSource, DataSourceOptions } from "typeorm";
 import { Task } from '../tasks/entities/task.entity';
 import { TaskColumn } from '../task-columns/entities/task-column.entity';
-import { HistoryOfChangesBoardModule } from 'src/history-of-changes-board/history-of-changes-board.module';
-import { HistoryOfChangesTaskModule } from 'src/history-of-changes-task/history-of-changes-task.module';
+import { HistoryOfChangesBoardModule } from '../history-of-changes-board/history-of-changes-board.module';
+import { HistoryOfChangesTaskModule } from '../history-of-changes-task/history-of-changes-task.module';
 
 dotenvConfig({ path: '.env' });
 

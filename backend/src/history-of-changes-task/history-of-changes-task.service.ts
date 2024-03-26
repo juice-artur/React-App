@@ -3,7 +3,7 @@ import { CreateHistoryOfChangesTaskDto } from './dto/create-history-of-changes-t
 import { UpdateHistoryOfChangesTaskDto } from './dto/update-history-of-changes-task.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Task } from 'src/tasks/entities/task.entity';
+import { Task } from '../tasks/entities/task.entity';
 import { HistoryOfChangesTask } from './entities/history-of-changes-task.entity';
 
 @Injectable()

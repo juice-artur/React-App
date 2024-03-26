@@ -5,8 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Task } from './entities/task.entity';
 import { TaskProfile } from './task.profile';
 import { AutoMapperModule } from './AutoMapperModule';
-import { TaskColumn } from 'src/task-columns/entities/task-column.entity';
-import { HistoryOfChangesTask } from 'src/history-of-changes-task/entities/history-of-changes-task.entity';
+import { TaskColumn } from '../task-columns/entities/task-column.entity';
+import { HistoryOfChangesTask } from '../history-of-changes-task/entities/history-of-changes-task.entity';
 
 
 
