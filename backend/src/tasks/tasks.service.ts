@@ -9,6 +9,7 @@ import { InjectMapper } from '@automapper/nestjs';
 import { TaskDto } from './dto/task.dto';
 
 import { TaskColumn } from 'src/task-columns/entities/task-column.entity';
+import { HistoryOfChangesTask } from 'src/history-of-changes-task/entities/history-of-changes-task.entity';
 
 
 @Injectable()
@@ -20,6 +21,8 @@ export class TasksService {
     @InjectRepository(TaskColumn)
     private taskColumnRepository : Repository<TaskColumn>,
     @InjectMapper()  private classMapper:  Mapper,
+    @InjectRepository(HistoryOfChangesTask)
+    private historyOfChangesTaskRepository: Repository<HistoryOfChangesTask>
   ) { 
   }
 
@@ -37,6 +40,8 @@ export class TasksService {
     const newTask = this.taskRepository.create({ ...taskData, column });
     
     const savedTask = await this.taskRepository.save(newTask);
+    const item = this.historyOfChangesTaskRepository.create({description : "Task was create", task: savedTask,  created_at: new Date()})
+    this.historyOfChangesTaskRepository.save(item)
     return this.classMapper.mapAsync( savedTask, Task, TaskDto );
   }
 
@@ -69,7 +74,24 @@ export class TasksService {
     if (!column) {
         throw new Error(`TaskColumn with ID ${columnId} not found`);
     }
+    const changes = [];
+    if (title !== undefined && taskToUpdate.title !== title) {
+        changes.push(`Title changed from "${taskToUpdate.title}" to "${title}"`);
+    }
+    if (description !== undefined && taskToUpdate.description !== description) {
+        changes.push(`Description changed from "${taskToUpdate.description}" to "${description}"`);
+    }
 
+    if (priority !== undefined && taskToUpdate.priority !== priority) {
+      changes.push(`Priority changed from "${taskToUpdate.priority}" to "${priority}"`);
+  }
+    if(changes.length > 0)
+    {
+      const item = this.historyOfChangesTaskRepository.create({description : `Changes: ${changes.join(', ')}`, task: taskToUpdate,  created_at: new Date()})
+      this.historyOfChangesTaskRepository.save(item)
+  
+    }
+   
     taskToUpdate.title = title;
     taskToUpdate.due_date = due_date;
     taskToUpdate.description = description;
@@ -78,6 +100,8 @@ export class TasksService {
     taskToUpdate.updated_at = updated_at;
     taskToUpdate.priority = priority;
     taskToUpdate.column = column;
+
+
 
     return this.classMapper.mapAsync( await this.taskRepository.save(taskToUpdate), Task, TaskDto );
   }

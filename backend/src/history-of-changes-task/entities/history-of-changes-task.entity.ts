@@ -13,9 +13,6 @@ export class HistoryOfChangesTask
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     created_at: Date;
 
-    @Column({ type: "integer" })
-    task_id: number;
-
     @ManyToOne(() => Task)
     @JoinColumn({ name: "task_id" })
     task: Task;

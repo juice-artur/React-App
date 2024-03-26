@@ -19,7 +19,7 @@ export class HistoryOfChangesTaskController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.historyOfChangesTaskService.findOne(+id);
+    return this.historyOfChangesTaskService.findAllByTaskId(+id);
   }
 
   @Patch(':id')

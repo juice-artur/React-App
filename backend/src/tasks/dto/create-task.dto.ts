@@ -29,9 +29,11 @@ export class CreateTaskDto
     @ApiProperty({nullable: true })
     due_date: Date;
       
+
     @ApiProperty({nullable: true })
     columnId: number; 
 
+    @AutoMap()
     @ApiProperty({nullable: true })
     priority: Priority;
 }
