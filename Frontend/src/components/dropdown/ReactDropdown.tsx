@@ -57,7 +57,7 @@ const ReactDropdown: React.FC<DropdownProps> = (props) => {
               <li key={option.id}>
                 <button
                   onClick={() => handleOptionClick(option)}
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-right" // Змінено text-left на text-right
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-right" 
                 >
                   {option.title}
                 </button>
