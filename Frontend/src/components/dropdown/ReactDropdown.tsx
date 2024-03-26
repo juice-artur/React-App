@@ -46,18 +46,19 @@ const ReactDropdown: React.FC<DropdownProps> = (props) => {
         <p className="pr-2">{props.children}</p>
       </button>
   
+  
       {isOpen && (
         <div
           id="dropdown"
           className="z-50 absolute mt-2 bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-200"
-          style={{ top: 'calc(100% + 8px)', right: 0 }} // Змінено left на right
+          style={{ top: 'calc(100% + 8px)', right: 0 }}
         >
           <ul className="py-2 text-sm text-gray-700 dark:text-gray-600" aria-labelledby="dropdownDefaultButton">
             {props.options.map((option) => (
               <li key={option.id}>
                 <button
                   onClick={() => handleOptionClick(option)}
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-right" // Змінено text-left на text-right
+                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full text-right" 
                 >
                   {option.title}
                 </button>
@@ -69,4 +70,6 @@ const ReactDropdown: React.FC<DropdownProps> = (props) => {
     </div>
   );}
 
+
 export default ReactDropdown;
+
