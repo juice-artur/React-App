@@ -1,54 +1,60 @@
-import { useState } from 'react';
-import { CreateTask, Priority } from '../../../types/Task';
-import ReactDropdown from '../../dropdown/ReactDropdown';
+import React, { useState } from 'react';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
+import { Priority, Task } from '../../types/Task';
+import ReactDropdown from '../dropdown/ReactDropdown';
+import moment from 'moment';
 
-
-interface CreateTaskModalProps {
+interface EditTaskModalProps {
   isOpen: boolean,
-  onCreateTask: (createdTask: CreateTask) => void;
-  onClose: () => void
+  onEditTask: (editedTask: Task) => void;
+  onClose: () => void;
+  task: Task;
 }
 
-export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onCreateTask, onClose }) => {
-  const [taskTitle, setTaskTitle] = useState('');
-  const [taskDescription, setTaskDescription] = useState('');
-  const [taskDate, setTaskDate] = useState('');
-  const [taskPriority, setTaskPriority] = useState(Priority.LOW);
+export const EditTaskModalWindow: React.FC<EditTaskModalProps> = ({ task, isOpen, onEditTask, onClose }) => {
+  const [taskTitle, setTaskTitle] = useState(task.title);
+  const [taskDescription, setTaskDescription] = useState(task.description);
+  const [taskDate, setTaskDate] = useState(moment(task.due_date).format("YYYY-MM-DD"));
+  const [taskPriority, setTaskPriority] = useState(task.priority);
 
   const dropdownItems = Object.keys(Priority).map((element) => ({
     title: <div className='flex items-center'>{element}</div>,
     id: element,
   }));
 
-
-  const handleTitleChange = (e) => {
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTaskTitle(e.target.value);
   };
 
-  const handleDescriptionChange = (e) => {
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTaskDescription(e.target.value);
   };
 
-  const handleDateChange = (e) => {
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {    
     setTaskDate(e.target.value);
   };
 
-  const handleDropdownChange = (e) => {    
-    setTaskPriority(e.id);
+  const handleDropdownChange = (item: any) => {
+    setTaskPriority(item.id);
   };
 
   const clearForm = () => {
     setTaskTitle('');
     setTaskDescription('');
     setTaskDate('');
-    setTaskPriority(Priority.LOW)
-  }
+    setTaskPriority(Priority.LOW);
+  };
 
-  const handleCreateTask = () => {
+  const handleEditTask = () => {
     if (taskTitle.trim() !== '') {
-      onCreateTask({ title: taskTitle, description: taskDescription, due_date: new Date(taskDate), priority: taskPriority, columnId: 0 });
-      clearForm();
+      const editedTask: Task = {
+        ...task,
+        title: taskTitle,
+        description: taskDescription,
+        due_date: new Date(taskDate),
+        priority: taskPriority,
+      };
+      onEditTask(editedTask);
       onClose();
     }
   };
@@ -60,7 +66,7 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onCrea
           <div className="fixed inset-0 bg-black opacity-50"></div>
           <div className="relative bg-white rounded-lg shadow-md w-96">
             <div className="p-6">
-              <h2 className="text-lg font-semibold mb-4">Create Task</h2>
+              <h2 className="text-lg font-semibold mb-4">Update Task</h2>
               <label htmlFor="taskTitle" className="block text-sm font-medium text-gray-700 mb-1">Task Title</label>
               <input
                 type="text"
@@ -78,16 +84,14 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onCrea
                 onChange={handleDescriptionChange}
                 className="w-full border border-gray-300 rounded-md px-3 py-2 mb-4"
                 placeholder="Enter task description"
-                rows="5"
+                rows={5}
               ></textarea>
 
-
-              <ReactDropdown options={dropdownItems} onSelect={(item: any) => handleDropdownChange(item)} >
+              <ReactDropdown options={dropdownItems} onSelect={handleDropdownChange} classNames={['mb-4']}>
                 <div className='flex items-center pl-0'>
                   {taskPriority} <BiDotsVerticalRounded />
                 </div>
               </ReactDropdown>
-
 
               <label htmlFor="taskDate" className="block text-sm font-medium text-gray-700 mb-1">Task due date</label>
               <input
@@ -104,10 +108,10 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onCrea
                   className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mr-2"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleCreateTask();
+                    handleEditTask();
                   }}
                 >
-                  Create
+                  Update
                 </button>
                 <button
                   className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
