@@ -18,13 +18,11 @@ export class AddPriorityToTask1711395562778 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        // Drop the priority column from the task table
         await queryRunner.query(`
             ALTER TABLE task
             DROP COLUMN priority
         `);
 
-        // Drop the ENUM type for priority
         await queryRunner.query(`
             DROP TYPE IF EXISTS priority_enum;
         `);
