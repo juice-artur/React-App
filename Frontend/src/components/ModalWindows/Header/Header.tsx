@@ -31,12 +31,12 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
     return (
         <>
 
-            <header className="bg-gray-800 text-white py-4">
+            <header className="bg-gray-800 text-white py-4 px-4">
                 <div className="container mx-auto flex justify-between items-center">
                     <div className="text-2xl font-bold">{props.title}</div>
-                    <div className="flex items-center cursor-pointer" onClick={() => {openModal() }}>
-                        <FaPlus className="mx-2" />
-                        <h1>Create new list</h1>
+                    <div className="flex cursor-pointer" onClick={() => {openModal() }}>
+                        <FaPlus className="mx-2 my-1" />
+                        <p>Create new list</p>
                     </div>
                 </div>
             </header>

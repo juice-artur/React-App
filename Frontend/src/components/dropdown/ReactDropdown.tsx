@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useState, useRef, useEffect } from 'react';
 
 interface Option {
   id: string;
@@ -9,11 +9,25 @@ interface DropdownProps {
   options: Option[];
   onSelect: (option: Option) => void;
   classNames?: string[];
-  children: ReactNode
+  children: ReactNode;
 }
 
 const ReactDropdown: React.FC<DropdownProps> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleOptionClick = (option: Option) => {
     props.onSelect(option);
@@ -21,7 +35,7 @@ const ReactDropdown: React.FC<DropdownProps> = (props) => {
   };
 
   return (
-    <div className={`relative inline-block text-left ${props.classNames?.join(' ')}`}>
+    <div className={`relative inline-block text-left ${props.classNames?.join(' ')}`} ref={dropdownRef}>
       <button
         id="dropdownDefaultButton"
         data-dropdown-toggle="dropdown"
@@ -29,7 +43,7 @@ const ReactDropdown: React.FC<DropdownProps> = (props) => {
         type="button"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <p className="px-2">{props.children}</p>
+        <p className="pr-2">{props.children}</p>
       </button>
 
       {isOpen && (

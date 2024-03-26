@@ -8,6 +8,8 @@ import { ColumnData } from '../../types/ColumnData';
 import EditableTitle from '../EditableTitle/EditableTitle';
 import { FaTrashCan } from "react-icons/fa6";
 import { BiDotsVerticalRounded } from "react-icons/bi";
+import Badge from "../Badge/Badge";
+import { GoDotFill } from "react-icons/go";
 
 
 const Card = ({ task, index }) => {
@@ -30,14 +32,13 @@ const Card = ({ task, index }) => {
 
   const onSelect = (item: any) => {
     if (item.id == CardAction.DELETE) {
-        dispatch(deleteTask(task.id))
+      dispatch(deleteTask(task.id))
     }
 
-    if(item.id == CardAction.EDIT)
-    {
-        //setFocusInput(true);
+    if (item.id == CardAction.EDIT) {
+      //setFocusInput(true);
     }
-}
+  }
 
   return (
     <Draggable key={task.title} draggableId={task.title + task.id} index={index}>
@@ -64,12 +65,19 @@ const Card = ({ task, index }) => {
           <div className="flex items-center mt-2">
             <FaCalendar className="text-gray-400 mr-2" />
             <p className="text-gray-400 text-xs">
-              {moment(task.created_at).format("YYYY/MM/DD")}
+              {moment(task.due_date).format("YYYY/MM/DD")}
             </p>
           </div>
 
+          <Badge classNames={['pl-2 pr-4 mt-4 py-2 text-secondary-600 bg-[#C5C5C5] dark:text-secondary-400']}>
+            <div className="flex items-center">
+              <GoDotFill /> {task.priority}
+            </div>
+          </Badge>
+
+
           <ReactDropdown  classNames={['mt-2', "px-4",'border', 'border-gray-300', 'w-full']} options={columns} onSelect={(targetColumn: ColumnData)=> {
-            dispatch(patchTask({...task, columnId: targetColumn.id}))
+            dispatch(patchTask({ ...task, columnId: targetColumn.id }))
           }}>MOVE TO:  </ReactDropdown>
         </div>
       )}
