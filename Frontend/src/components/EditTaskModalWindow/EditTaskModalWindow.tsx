@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { Priority, Task } from '../../types/Task';
 import ReactDropdown from '../dropdown/ReactDropdown';
 import moment from 'moment';
+import { HistoryOfChangesTask } from '../../types/TaskHistory';
+import axios from 'axios';
 
 interface EditTaskModalProps {
   isOpen: boolean,
@@ -16,6 +18,7 @@ export const EditTaskModalWindow: React.FC<EditTaskModalProps> = ({ task, isOpen
   const [taskDescription, setTaskDescription] = useState(task.description);
   const [taskDate, setTaskDate] = useState(moment(task.due_date).format("YYYY-MM-DD"));
   const [taskPriority, setTaskPriority] = useState(task.priority);
+  const [history, setHistory] = useState<HistoryOfChangesTask[]>([]);
 
   const dropdownItems = Object.keys(Priority).map((element) => ({
     title: <div className='flex items-center'>{element}</div>,
@@ -59,13 +62,29 @@ export const EditTaskModalWindow: React.FC<EditTaskModalProps> = ({ task, isOpen
     }
   };
 
+  const fetchData = async (id: number) => {
+    try {
+      const baseurl = import.meta.env.VITE_API_BASE_URL
+  
+      const response = await axios.get(`${baseurl}/history-of-changes-task/${id}`);
+  
+      setHistory(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(task.id);
+  }, []);
+
   return (
     <>
       {isOpen && (
         <div className="fixed inset-0 overflow-y-auto flex justify-center items-center z-50">
           <div className="fixed inset-0 bg-black opacity-50"></div>
-          <div className="relative bg-white rounded-lg shadow-md w-96">
-            <div className="p-6">
+          <div className="relative bg-white rounded-lg shadow-md flex w-full max-w-screen-lg">
+            <div className="p-6 w-2/3">
               <h2 className="text-lg font-semibold mb-4">Update Task</h2>
               <label htmlFor="taskTitle" className="block text-sm font-medium text-gray-700 mb-1">Task Title</label>
               <input
@@ -124,6 +143,15 @@ export const EditTaskModalWindow: React.FC<EditTaskModalProps> = ({ task, isOpen
                   Cancel
                 </button>
               </div>
+            </div>
+            
+            <div className="w-1/3 p-6 bg-gray-100">
+              <h3 className="text-lg font-semibold mb-2">History of Changes</h3>
+              <ul className="list-disc pl-5">
+                {history.map((change, index) => (
+                  <li key={index}>{change.description}</li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
