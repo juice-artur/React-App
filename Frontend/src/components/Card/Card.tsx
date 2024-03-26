@@ -10,6 +10,8 @@ import { FaTrashCan } from "react-icons/fa6";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import Badge from "../Badge/Badge";
 import { GoDotFill } from "react-icons/go";
+import { EditTaskModalWindow } from "../EditTaskModalWindow/EditTaskModalWindow";
+import { useState } from "react";
 
 
 const Card = ({ task, index }) => {
@@ -18,7 +20,22 @@ const Card = ({ task, index }) => {
     DELETE,
     EDIT,
   }
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const dispatch = useDispatch();
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {        
+        setIsModalOpen(false);
+    };
+
+    const handleEditTask = (t: Task) => {
+        dispatch(patchTask({...t, columnId:  task.columnId} ))
+    };
+
   const columns = useSelector((state) => state.columnReducer.columns);
 
   const handleTitleSave = (newTitle) => {
@@ -36,7 +53,7 @@ const Card = ({ task, index }) => {
     }
 
     if (item.id == CardAction.EDIT) {
-      //setFocusInput(true);
+      dispatch(openModal());
     }
   }
 
@@ -76,9 +93,19 @@ const Card = ({ task, index }) => {
           </Badge>
 
 
-          <ReactDropdown  classNames={['mt-2', "px-4",'border', 'border-gray-300', 'w-full']} options={columns} onSelect={(targetColumn: ColumnData)=> {
+          <ReactDropdown classNames={['mt-2', "px-4", 'border', 'border-gray-300', 'w-full']} options={columns} onSelect={(targetColumn: ColumnData) => {
             dispatch(patchTask({ ...task, columnId: targetColumn.id }))
           }}>MOVE TO:  </ReactDropdown>
+
+
+
+
+          <EditTaskModalWindow
+            isOpen={isModalOpen}
+            onClose={closeModal}
+            onEditTask={handleEditTask} 
+            task={task}          />
+
         </div>
       )}
     </Draggable>

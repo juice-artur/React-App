@@ -53,8 +53,9 @@ export class TasksService {
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto) : Promise<TaskDto | undefined> {
-    const { title, description, position, created_at, updated_at, columnId } = updateTaskDto;
-    const taskToUpdate = await this.taskRepository.findOne({
+    
+    const { title, description, position, created_at, updated_at, columnId, due_date, priority } = updateTaskDto;
+    let taskToUpdate = await this.taskRepository.findOne({
       where: { id },
       relations: ['column']
   });
@@ -70,10 +71,12 @@ export class TasksService {
     }
 
     taskToUpdate.title = title;
+    taskToUpdate.due_date = due_date;
     taskToUpdate.description = description;
     taskToUpdate.position = position;
     taskToUpdate.created_at = created_at;
     taskToUpdate.updated_at = updated_at;
+    taskToUpdate.priority = priority;
     taskToUpdate.column = column;
 
     return this.classMapper.mapAsync( await this.taskRepository.save(taskToUpdate), Task, TaskDto );

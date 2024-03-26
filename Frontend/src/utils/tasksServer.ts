@@ -24,6 +24,8 @@ export const getAllTasks = () => async (dispatch: Dispatch) => {
 export const patchTask = (updatedTaskData: any) => async (dispatch: Dispatch) => {
     
   try {    
+    console.log(updatedTaskData);
+    
       const baseurl = import.meta.env.VITE_API_BASE_URL
       const res = await axios.patch(`${baseurl}/tasks/${updatedTaskData.id}`, updatedTaskData, {
       }); 
