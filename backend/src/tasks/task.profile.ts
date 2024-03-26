@@ -22,7 +22,8 @@ export class TaskProfile extends AutomapperProfile {
                 forMember(dest => dest.position, mapFrom(src => src.position)),
                 forMember(dest => dest.created_at, mapFrom(src => src.created_at)),
                 forMember(dest => dest.updated_at, mapFrom(src => src.updated_at))),
-                forMember((dest: TaskDto) => dest.priority, mapFrom((src: Task) => src.priority))
+                forMember((dest: TaskDto) => dest.priority, mapFrom((src: Task) => src.priority)),
+                forMember((dest: TaskDto) => dest.due_date, mapFrom((src: Task) => src.due_date))
         };
     }
 }

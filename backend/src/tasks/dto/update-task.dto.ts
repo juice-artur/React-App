@@ -17,6 +17,11 @@ export class UpdateTaskDto extends PartialType(CreateTaskDto)
     @ApiProperty({nullable: true })
     position: number;
   
+     
+    @AutoMap()
+    @ApiProperty({nullable: true })
+    due_date: Date;
+
     @AutoMap()
     @ApiProperty({nullable: true })
     created_at: Date;

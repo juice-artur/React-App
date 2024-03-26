@@ -35,4 +35,8 @@ export class TaskDto {
   @AutoMap()
   @ApiProperty({nullable: true })
   priority: Priority;
+
+  @AutoMap()
+  @ApiProperty({nullable: true })
+  due_date: Date;
 }
