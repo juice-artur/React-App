@@ -49,7 +49,7 @@ export class Task {
   priority: Priority;
 
 
-  @ManyToOne(() => TaskColumn, taskColumn => taskColumn.task)
+  @ManyToOne(() => TaskColumn, taskColumn => taskColumn.task, { cascade: false }) 
   @JoinColumn({name: 'column_id'})
   @ApiProperty()
   column: TaskColumn;

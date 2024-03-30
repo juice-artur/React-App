@@ -18,7 +18,7 @@ export class Board
     title: string;
   
     @AutoMap()
-    @OneToMany(() => TaskColumn, column => column.task, {cascade: true})
+    @OneToMany(() => TaskColumn, column => column.task)
     @ApiProperty()
     column: TaskColumn[];
 }
