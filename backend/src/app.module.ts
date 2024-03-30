@@ -9,6 +9,7 @@ import { TasksModule } from './tasks/tasks.module';
 import { TaskColumnsModule } from './task-columns/task-columns.module';
 import { HistoryOfChangesBoardModule } from './history-of-changes-board/history-of-changes-board.module';
 import { HistoryOfChangesTaskModule } from './history-of-changes-task/history-of-changes-task.module';
+import { BoardModule } from './board/board.module';
 
 
 
@@ -28,6 +29,7 @@ import { HistoryOfChangesTaskModule } from './history-of-changes-task/history-of
     }),
     HistoryOfChangesBoardModule,
     HistoryOfChangesTaskModule,
+    BoardModule,
 
   ],
   controllers: [AppController],

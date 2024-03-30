@@ -27,7 +27,7 @@ services:
     volumes:
       - ./src:/app/src
 
-  pgadmin:
+  nest-pgadmin4:
     image: dpage/pgadmin4
     restart: always
     container_name: nest-pgadmin4
