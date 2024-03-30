@@ -1,4 +1,4 @@
-import { CREATE_TASK, DELETE_TASK, GET_TASKS, PATCH_TASK } from '../store/actionType';
+/*import { CREATE_TASK, DELETE_TASK, GET_TASKS, PATCH_TASK } from '../Store/actionType';
 import axios from 'axios'
 import { Dispatch } from 'redux';
 import { CreateTask } from '../types/Task';
@@ -81,6 +81,6 @@ export const deleteTask = (deleteTaskId: number) => async (dispatch: Dispatch) =
         type: 'ERROR_OCCURRED'
       })
   }
-}
+}*/
 
 

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Dispatch } from 'redux';
-import { CREATE_COLUMN, DELETE_COLUMN, GET_COLUMNS, PATCH_COLUMN } from '../Store/actionType';
+import { CREATE_COLUMN, DELETE_COLUMN, GET_COLUMNS, PATCH_COLUMN } from '../store/actionType';
 import { CreateColumnData } from '../types/ColumnData';
 
 export const getAllTaskColumns = () => async (dispatch: Dispatch) => {
