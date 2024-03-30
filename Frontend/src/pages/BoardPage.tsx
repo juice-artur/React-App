@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 
 
 
-const Board = () => {
+const BoardPage = () => {
     const {id} = useParams();
     const dispatch = useDispatch();
 
@@ -142,4 +142,4 @@ const Board = () => {
     );
 };
 
-export default Board;
+export default BoardPage;

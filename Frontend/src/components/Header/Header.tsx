@@ -1,8 +1,8 @@
 import { FaPlus } from "react-icons/fa";
-import { CreateTaskListModal } from "../CreateTaskList/CreateTaskList";
+import { CreateTaskListModal } from "../ModalWindows/CreateTaskList/CreateTaskList";
 import { useState } from "react";
-import { CreateColumnData } from "../../../types/ColumnData";
-import { createColumn } from "../../../utils/taskColumsServer";
+import { CreateColumnData } from "../../types/ColumnData";
+import { createColumn } from "../../utils/taskColumsServer";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 

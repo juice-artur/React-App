@@ -1,5 +1,5 @@
 import "./App.css";
-import Header from "./components/ModalWindows/Header/Header";
+import Header from "./components/Header/Header";
 import { Route, Routes } from "react-router-dom";
 import AppRoutes from "./AppRoutes";
 
