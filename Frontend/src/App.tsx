@@ -1,13 +1,18 @@
-import { useState } from "react";
 import "./App.css";
 import Header from "./components/ModalWindows/Header/Header";
-import Homepage from "./pages/Homepage";
+import { Route, Routes } from "react-router-dom";
+import AppRoutes from "./AppRoutes";
 
 function App() {
   return (
     <div>
-      <Header title="My Task Board"/>
-      <Homepage/>
+      <Header title="Board"/>
+      <Routes>
+          {AppRoutes.map((route, index) => {
+            const { element, ...rest } = route;
+            return <Route key={index} {...rest} element={element}/>;
+          })}
+        </Routes>
     </div>
 
   );

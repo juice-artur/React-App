@@ -4,10 +4,14 @@ import App from './App.tsx'
 import './styles.css';
 import { Provider } from 'react-redux';
 import store from './Store/store.tsx';
+import { BrowserRouter } from 'react-router-dom';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <Provider store={store}>
+  <Provider store={store}>
+    <BrowserRouter>
       <App />
-    </Provider>
+    </BrowserRouter>
+
+  </Provider>
 );
