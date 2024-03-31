@@ -13,7 +13,9 @@ interface HeaderProps {
 
 
 const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
-    const { id } = useParams();
+    const location: string = useLocation().pathname;
+
+
     const dispatch = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -26,11 +28,11 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
     };
 
     const handleCreateTaskList = (createdTaskList: CreateColumnData) => {
-        console.log(id);
+       const id = location.split("/")[2];
         
         dispatch(createColumn({...createdTaskList, board_id: Number(id)}))
     }
-    const location: string = useLocation().pathname;
+
     return (
         <>
 
