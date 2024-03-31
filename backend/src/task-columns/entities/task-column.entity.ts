@@ -1,7 +1,8 @@
 import { AutoMap } from "@automapper/classes";
 import { Task } from "../../tasks/entities/task.entity";
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn, ManyToOne } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
+import { Board } from "src/board/entities/board.entity";
 
 @Entity()
 export class TaskColumn {
@@ -30,8 +31,13 @@ export class TaskColumn {
   @ApiProperty()
   updated_at: Date;
 
-  @OneToMany(() => Task, task => task.column, {cascade: true})
+  @OneToMany(() => Task, task => task.column)
   @ApiProperty()
   task: Task[];
+
+  @OneToMany(() => Task, task => task.column, { cascade: ['remove'] })
+  @JoinColumn({name: 'board_id'})
+  @ApiProperty()
+  board: Board;
 }
 
