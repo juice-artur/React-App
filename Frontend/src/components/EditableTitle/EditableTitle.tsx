@@ -1,6 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const EditableTitle = ({ initialTitle, onSave, focusInput }) => {
+interface EditableTitleProps
+{
+  initialTitle: string,
+  onSave: (item: any) => void;
+  focusInput? : any
+}
+
+const EditableTitle: React.FC<EditableTitleProps> = ({ initialTitle, onSave, focusInput }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(initialTitle);
   const inputRef = useRef(null);

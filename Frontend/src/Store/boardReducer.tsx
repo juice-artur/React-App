@@ -1,5 +1,5 @@
 import { Board } from "../types/Board";
-import { GET_BOARDS } from "./actionType";
+import { CREATE_BOARD, GET_BOARDS } from "./actionType";
 
 export interface BoardState {
     boards: Board[];
@@ -19,6 +19,12 @@ const boardReducer = (state = initialState, action: any) => {
                 boards: action.payload,
                 loading: false
 
+            }
+        case CREATE_BOARD:
+            return {
+                ...state,
+                boards: [action.payload, ...state.boards],
+                loading: false
             }
 
         default:
