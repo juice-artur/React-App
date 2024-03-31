@@ -23,12 +23,12 @@ export class BoardController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBoardDto: UpdateBoardDto) {
-    return this.boardService.update(+id, updateBoardDto);
+  async update(@Param('id') id: string, @Body() updateBoardDto: UpdateBoardDto) {
+    return await this.boardService.update(+id, updateBoardDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.boardService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.boardService.remove(+id);
   }
 }

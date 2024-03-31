@@ -57,8 +57,7 @@ export class TasksService {
   }), Task, TaskDto);
   }
 
-  async update(id: number, updateTaskDto: UpdateTaskDto) : Promise<TaskDto | undefined> {
-    
+  async update(id: number, updateTaskDto: UpdateTaskDto) : Promise<TaskDto | undefined> {  
     const { title, description, position, created_at, updated_at, columnId, due_date, priority } = updateTaskDto;
     let taskToUpdate = await this.taskRepository.findOne({
       where: { id },
