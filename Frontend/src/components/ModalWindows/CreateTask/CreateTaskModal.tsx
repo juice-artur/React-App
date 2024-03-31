@@ -16,6 +16,7 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onCrea
   const [taskDate, setTaskDate] = useState('');
   const [taskPriority, setTaskPriority] = useState(Priority.LOW);
 
+
   const dropdownItems = Object.keys(Priority).map((element) => ({
     title: <div className='flex items-center'>{element}</div>,
     id: element,

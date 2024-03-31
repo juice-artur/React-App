@@ -17,6 +17,11 @@ export class TaskColumnsController {
     return this.taskColumnsService.findAll();
   }
 
+  @Get('/by-board-id/:id')
+  findAllByBoardId(@Param('id') id: string) {
+    return this.taskColumnsService.findAllByBoardId(Number(id));
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.taskColumnsService.findOne(+id);

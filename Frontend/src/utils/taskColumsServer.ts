@@ -3,11 +3,11 @@ import { Dispatch } from 'redux';
 import { CREATE_COLUMN, DELETE_COLUMN, GET_COLUMNS, PATCH_COLUMN } from '../store/actionType';
 import { CreateColumnData } from '../types/ColumnData';
 
-export const getAllTaskColumns = () => async (dispatch: Dispatch) => {
+export const getAllTaskColumnsByBoardId = (id: number) => async (dispatch: Dispatch) => {
     
   try{    
       const baseurl = import.meta.env.VITE_API_BASE_URL
-      const res = await axios.get(`${baseurl}/task-columns`)  
+      const res = await axios.get(`${baseurl}/task-columns/by-board-id/${id}`)  
       dispatch( {
           type: GET_COLUMNS,
           payload: res.data
@@ -62,6 +62,7 @@ export const deleteColumn = (deleteColumnId: number) => async (dispatch: Dispatc
 
 
 export const createColumn = (createColumn: CreateColumnData) => async (dispatch: Dispatch) => {
+    console.log(createColumn);
     
   try {    
       const baseurl = import.meta.env.VITE_API_BASE_URL

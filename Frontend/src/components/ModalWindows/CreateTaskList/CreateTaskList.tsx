@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CreateColumnData } from '../../../types/ColumnData';
+import { useParams } from 'react-router-dom';
 
 
 interface CreateTaskListModalProps {
@@ -10,7 +11,8 @@ interface CreateTaskListModalProps {
 
 export const CreateTaskListModal: React.FC<CreateTaskListModalProps> = ({ isOpen, onCreateList, onClose }) => {
     const [listTitle, setListTitle] = useState('');
-
+   
+    const { id } = useParams();
     const handleTitleChange = (e) => {
         setListTitle(e.target.value);
     };
@@ -21,7 +23,9 @@ export const CreateTaskListModal: React.FC<CreateTaskListModalProps> = ({ isOpen
 
     const handleCreateList = () => {
         if (listTitle.trim() !== '') {
-            onCreateList({ title: listTitle });
+            console.log(id);
+            
+            onCreateList({ title: listTitle, board_id: Number(id) });
             clearForm();
             onClose();
         }

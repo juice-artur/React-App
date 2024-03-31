@@ -4,28 +4,47 @@ import { UpdateTaskColumnDto } from './dto/update-task-column.dto';
 import { TaskColumn } from './entities/task-column.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Board } from 'src/board/entities/board.entity';
 
 @Injectable()
 export class TaskColumnsService {
-
   constructor(
     @InjectRepository(TaskColumn)
-    private taskColumnRepository: Repository<TaskColumn>) { }
+    private taskColumnRepository: Repository<TaskColumn>,
+    @InjectRepository(Board)
+    private boardRepository: Repository<Board>) { }
 
-  async create(createTaskColumnDto: CreateTaskColumnDto) {
+  async create(createTaskColumnDto: CreateTaskColumnDto)  {
+    console.log(createTaskColumnDto)
      let Columnn = await  (await this.taskColumnRepository.find())
      .sort((prev:TaskColumn, curr:TaskColumn) => prev.position - curr.position);
      
      let targetPos =  Columnn.length > 0 ? Columnn[0].position / 2 : 1000;
      createTaskColumnDto.position = targetPos;
-    const newColumn = this.taskColumnRepository.create({ ...createTaskColumnDto });
-    
-    const savedTask = await this.taskColumnRepository.save(newColumn);
-    return savedTask;
+     const board = await this.boardRepository.findOne({
+       where: { id : createTaskColumnDto.board_id }});
+     if (!board) {
+       throw new Error(`Board with ID ${createTaskColumnDto.board_id} not found`);
+     }
+     console.log(board);
+
+    const newColumn = this.taskColumnRepository.create({ ...createTaskColumnDto, board: board });
+    console.log(newColumn);
+    const savedColumn = await this.taskColumnRepository.save(newColumn);
+    console.log(savedColumn);
+    return savedColumn;
   }
 
   findAll() {
     return this.taskColumnRepository.find();
+  }
+
+  findAllByBoardId(id: number) {
+    return this.boardRepository.findOne({relations: ['column'], where: {id:id}})
+    .then((board:  Board) => {
+      console.log(board);
+      return board.column
+    });
   }
 
   findOne(id: number) {

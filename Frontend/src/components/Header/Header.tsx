@@ -1,10 +1,10 @@
 import { FaPlus } from "react-icons/fa";
 import { CreateTaskListModal } from "../ModalWindows/CreateTaskList/CreateTaskList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CreateColumnData } from "../../types/ColumnData";
 import { createColumn } from "../../utils/taskColumsServer";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 interface HeaderProps {
     classNames?: string[];
@@ -13,6 +13,7 @@ interface HeaderProps {
 
 
 const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
+    const { id } = useParams();
     const dispatch = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,7 +26,9 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
     };
 
     const handleCreateTaskList = (createdTaskList: CreateColumnData) => {
-        dispatch(createColumn(createdTaskList))
+        console.log(id);
+        
+        dispatch(createColumn({...createdTaskList, board_id: Number(id)}))
     }
     const location: string = useLocation().pathname;
     return (

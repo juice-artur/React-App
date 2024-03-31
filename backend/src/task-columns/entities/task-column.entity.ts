@@ -35,8 +35,8 @@ export class TaskColumn {
   @ApiProperty()
   task: Task[];
 
-  @OneToMany(() => Task, task => task.column, { cascade: ['remove'] })
-  @JoinColumn({name: 'board_id'})
+  @ManyToOne(() => Board)
+  @JoinColumn({ name: "board_id" })
   @ApiProperty()
   board: Board;
 }
