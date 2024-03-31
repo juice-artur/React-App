@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { CreateColumnData } from "../../types/ColumnData";
 import { createColumn } from "../../utils/taskColumsServer";
 import { useDispatch } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 interface HeaderProps {
     classNames?: string[];
@@ -32,13 +32,13 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
         
         dispatch(createColumn({...createdTaskList, board_id: Number(id)}))
     }
-
+    const navigate = useNavigate();
     return (
         <>
 
             <header className="bg-gray-800 text-white py-4 px-4">
                 <div className="container mx-auto flex justify-between items-center">
-                    <div className="text-2xl font-bold">{props.title}</div>
+                    <div className="text-2xl font-bold  cursor-pointer" onClick={()=> navigate('')}>{props.title}</div>
                     {
                         location.includes("board/") ?
                             <div className="flex cursor-pointer" onClick={() => { openModal() }}>
