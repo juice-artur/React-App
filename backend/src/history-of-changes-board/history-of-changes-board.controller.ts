@@ -12,9 +12,9 @@ export class HistoryOfChangesBoardController {
     return this.historyOfChangesBoardService.create(createHistoryOfChangesBoardDto);
   }
 
-  @Get()
-  findAll() {
-    return this.historyOfChangesBoardService.findAll();
+  @Get('find-all-by-board-id/:id')
+  findAllByBoardId(@Param('id') id: string) {
+    return this.historyOfChangesBoardService.findAllByBoardId(Number(id));
   }
 
   @Get(':id')

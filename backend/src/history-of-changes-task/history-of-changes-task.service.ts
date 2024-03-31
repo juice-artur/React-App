@@ -35,7 +35,7 @@ export class HistoryOfChangesTaskService {
     return  await this.historyOfChangesTaskRepository.find({
       where: { task: { id: id } },
       relations: ['task']
-    });;
+    });
   }
 
   findAll() {

@@ -1,6 +1,7 @@
 import { AutoMap } from "@automapper/classes";
 import { ApiProperty } from "@nestjs/swagger";
 import { Board } from "src/board/entities/board.entity";
+import { TaskColumn } from "src/task-columns/entities/task-column.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: "history_of_changes_board"})
@@ -26,5 +27,6 @@ export class HistoryOfChangesBoard
     @JoinColumn({ name: "board_id" })
     @ApiProperty()
     board: Board;
+
 }
 
