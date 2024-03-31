@@ -6,4 +6,5 @@ export interface ColumnData {
 
   export interface CreateColumnData {
     title: string;
+    board_id: number
   }

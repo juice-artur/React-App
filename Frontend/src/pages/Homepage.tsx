@@ -12,7 +12,6 @@ const Homepage = () => {
     useEffect(() => {
         dispatch(getAllBoards());
     }, [dispatch]);
-
     const boards: Board[] = useSelector((state: any) => state.boardReducer.boards);
     return (
 

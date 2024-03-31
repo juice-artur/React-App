@@ -24,11 +24,25 @@ export class BoardService {
     return `This action returns a #${id} board`;
   }
 
-  update(id: number, updateBoardDto: UpdateBoardDto) {
-    return `This action updates a #${id} board`;
+  async update(id: number, updateBoardDto: UpdateBoardDto) {
+    let existboard = await this.boardRepository.findOne({
+      where: { id : id},
+
+  });
+
+    if (!existboard) {
+        throw new Error(`Board with ID ${id} not found`);
+    }
+
+    const changes = [];
+    if (updateBoardDto.title !== undefined && updateBoardDto.title !== existboard.title) {
+     //   changes.push(`Title changed from "${taskToUpdate.title}" to "${title}"`);
+    }
+
+    await this.boardRepository.save({...existboard, title: updateBoardDto.title});
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} board`;
+  async remove(id: number) {
+    await this.boardRepository.delete(id);
   }
 }

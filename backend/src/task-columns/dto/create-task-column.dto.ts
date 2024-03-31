@@ -17,7 +17,10 @@ export class CreateTaskColumnDto
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   @ApiProperty()
-  created_at: Date;
+  created_at: Date;  
+  
+  @ApiProperty()
+  board_id: number; 
 
   @Column({ nullable: true, type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   @ApiProperty()

@@ -5,7 +5,7 @@ import Column from "../components/Column/Column";
 import { Task } from "../types/Task";
 import { getAllTasks, patchTask } from "../utils/tasksServer";
 import { useEffect } from "react";
-import { getAllTaskColumns, patchColumn } from "../utils/taskColumsServer";
+import { getAllTaskColumnsByBoardId, patchColumn } from "../utils/taskColumsServer";
 import { useParams } from "react-router-dom";
 
 
@@ -16,7 +16,7 @@ const BoardPage = () => {
 
     useEffect(() => {
         dispatch(getAllTasks());
-        dispatch(getAllTaskColumns());
+        dispatch(getAllTaskColumnsByBoardId(id));
     }, [dispatch]);
 
 

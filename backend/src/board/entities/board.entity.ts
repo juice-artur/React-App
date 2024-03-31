@@ -1,8 +1,7 @@
 import { AutoMap } from "@automapper/classes";
 import { ApiProperty } from "@nestjs/swagger";
 import { TaskColumn } from "src/task-columns/entities/task-column.entity";
-import { Task } from "src/tasks/entities/task.entity";
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn } from "typeorm";
 
 @Entity()
 export class Board 
@@ -16,9 +15,8 @@ export class Board
     @Column()
     @ApiProperty()
     title: string;
-  
-    @AutoMap()
-    @OneToMany(() => TaskColumn, column => column.task)
+
+    @OneToMany(() => TaskColumn, column => column.board)
     @ApiProperty()
     column: TaskColumn[];
 }
