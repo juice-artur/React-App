@@ -5,6 +5,7 @@ import { TaskColumn } from './entities/task-column.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Board } from 'src/board/entities/board.entity';
+import { HistoryOfChangesBoard } from 'src/history-of-changes-board/entities/history-of-changes-board.entity';
 
 @Injectable()
 export class TaskColumnsService {
@@ -12,7 +13,10 @@ export class TaskColumnsService {
     @InjectRepository(TaskColumn)
     private taskColumnRepository: Repository<TaskColumn>,
     @InjectRepository(Board)
-    private boardRepository: Repository<Board>) { }
+    private boardRepository: Repository<Board>,
+    @InjectRepository(HistoryOfChangesBoard)
+    private historyOfChangesBoardRepository: Repository<HistoryOfChangesBoard>
+    ) { }
 
   async create(createTaskColumnDto: CreateTaskColumnDto)  {
     console.log(createTaskColumnDto)
@@ -26,12 +30,14 @@ export class TaskColumnsService {
      if (!board) {
        throw new Error(`Board with ID ${createTaskColumnDto.board_id} not found`);
      }
-     console.log(board);
+
+     const item = this.historyOfChangesBoardRepository.create({description : `Column ${createTaskColumnDto.title} was create`, board: board,  created_at: new Date()})
+     this.historyOfChangesBoardRepository.save(item)
+     
 
     const newColumn = this.taskColumnRepository.create({ ...createTaskColumnDto, board: board });
-    console.log(newColumn);
     const savedColumn = await this.taskColumnRepository.save(newColumn);
-    console.log(savedColumn);
+
     return savedColumn;
   }
 
@@ -42,7 +48,6 @@ export class TaskColumnsService {
   findAllByBoardId(id: number) {
     return this.boardRepository.findOne({relations: ['column'], where: {id:id}})
     .then((board:  Board) => {
-      console.log(board);
       return board.column
     });
   }
@@ -68,10 +73,33 @@ export class TaskColumnsService {
     taskColumnToUpdate.created_at = updateTaskColumnDto.created_at;
     taskColumnToUpdate.updated_at = updateTaskColumnDto.updated_at;
 
+    const board = await this.boardRepository.findOne({
+      where: { id : updateTaskColumnDto.board_id }});
+    if (!board) {
+      throw new Error(`Board with ID ${updateTaskColumnDto.board_id} not found`);
+    }
+
+    const item = this.historyOfChangesBoardRepository.create({description : `Column ${updateTaskColumnDto.title} was edited`, board: board,  created_at: new Date()})
+    this.historyOfChangesBoardRepository.save(item)
+
     return await this.taskColumnRepository.save(taskColumnToUpdate);
   }
 
   async remove(id: number) {
+
+   const column= await this.taskColumnRepository.findOne({
+      where: { id },
+      relations: ['board']
+    });
+    const board = await this.boardRepository.findOne({
+      where: { id : column.board.id },
+    });
+    if (!board) {
+      throw new Error(`Board with ID ${column.board.id} not found`);
+    }
+
+    const item = this.historyOfChangesBoardRepository.create({description : `Column ${column.title} was deleted`, board: board,  created_at: new Date()})
+    this.historyOfChangesBoardRepository.save(item)
     await this.taskColumnRepository.delete(id);
   }
 }

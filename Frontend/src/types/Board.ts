@@ -4,3 +4,9 @@ export interface Board {
     title: string;
 }
 
+
+export interface HistoryOfChangesBoard
+{
+    id?: number;
+    title: string;
+}

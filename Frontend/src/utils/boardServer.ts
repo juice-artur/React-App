@@ -66,8 +66,6 @@ export const patchBoard = (updatedBoardData: any) => async (dispatch: Dispatch) 
 export const deleteBoard = (boardId: number) => async (dispatch: Dispatch) => {
     
   try {      
-    console.log(boardId);
-          
       const baseurl = import.meta.env.VITE_API_BASE_URL
       const res = await axios.delete(`${baseurl}/boards/${boardId}`,{
       }); 

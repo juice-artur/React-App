@@ -61,6 +61,7 @@ export const EditTaskModalWindow: React.FC<EditTaskModalProps> = ({ task, isOpen
       onClose();
     }
   };
+  
 
   const fetchData = async (id: number) => {
     try {
