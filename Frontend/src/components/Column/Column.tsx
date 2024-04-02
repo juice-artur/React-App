@@ -14,6 +14,7 @@ import EditableTitle from '../EditableTitle/EditableTitle';
 import { useState } from 'react';
 import { CreateTaskModal } from '../ModalWindows/CreateTask/CreateTaskModal';
 import { createTask } from '../../utils/tasksServer';
+import { HistoryOfChangesBoard } from '../../types/Board';
 
 const Column = ({ columnData, index }: { columnData: ColumnData; index: number }) => {
 
@@ -65,9 +66,6 @@ const Column = ({ columnData, index }: { columnData: ColumnData; index: number }
         setFocusInput(false)
         dispatch(patchColumn({ ...columnData, title: newTitle }));
     };
-
-
-
 
 
     return (
