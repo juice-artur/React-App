@@ -12,9 +12,15 @@ import Badge from "../Badge/Badge";
 import { GoDotFill } from "react-icons/go";
 import { EditTaskModalWindow } from "../EditTaskModalWindow/EditTaskModalWindow";
 import { useState } from "react";
+import { Task } from "../../types/Task";
 
 
-const Card = ({ task, index }) => {
+interface CardProps {
+  task: Task
+  index: number
+}
+
+const Card:React.FC<CardProps> = ({ task, index }) => {
 
   enum CardAction {
     DELETE,
