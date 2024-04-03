@@ -14,6 +14,10 @@
   npx storybook init
   npm run storybook
   ```
+* JEST
+  ```
+  npx jest
+  ```
 
 # React + TypeScript + Vite
 

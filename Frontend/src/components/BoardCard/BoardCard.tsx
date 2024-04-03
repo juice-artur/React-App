@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Board } from "../../types/Board";
-import EditableTitle from "../EditableTitle/EditableTitle";
+import EditableTitle from "../EditableTitle/EditableTitle.tsx";
 import { deleteBoard, patchBoard } from "../../utils/boardServer";
 import { useDispatch } from "react-redux";
 import { useState } from "react";

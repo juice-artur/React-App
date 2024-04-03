@@ -1,10 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
-import Card from './Card';
-import EditableTitle from '../EditableTitle/EditableTitle';
+import EditableTitle from './EditableTitle';
 import { useState } from 'react';
 
-const meta: Meta<typeof Card> = {
-  component: Card,
+const meta: Meta<typeof EditableTitle> = {
+  component: EditableTitle,
 };
 
 export default meta;
@@ -32,3 +31,5 @@ export const Primary: StoryObj = {
     );
   },
 };
+
+
