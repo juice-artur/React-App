@@ -4,8 +4,8 @@ import { UpdateTaskColumnDto } from './dto/update-task-column.dto';
 import { TaskColumn } from './entities/task-column.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Board } from 'src/board/entities/board.entity';
-import { HistoryOfChangesBoard } from 'src/history-of-changes-board/entities/history-of-changes-board.entity';
+import { Board } from '../board/entities/board.entity';
+import { HistoryOfChangesBoard } from '../history-of-changes-board/entities/history-of-changes-board.entity';
 
 @Injectable()
 export class TaskColumnsService {
