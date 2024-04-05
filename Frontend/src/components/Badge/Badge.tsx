@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
-interface DropdownProps {
+interface BadgeProps {
     classNames?: string[];
     children: ReactNode
   }
 
-const Badge: React.FC<DropdownProps> = ( props) => {
+const Badge: React.FC<BadgeProps> = ( props) => {
 
 
     return (
