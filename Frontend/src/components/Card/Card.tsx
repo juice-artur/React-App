@@ -103,9 +103,6 @@ const Card:React.FC<CardProps> = ({ task, index }) => {
             dispatch(patchTask({ ...task, columnId: targetColumn.id }))
           }}>MOVE TO:  </ReactDropdown>
 
-
-
-
           <EditTaskModalWindow
             isOpen={isModalOpen}
             onClose={closeModal}

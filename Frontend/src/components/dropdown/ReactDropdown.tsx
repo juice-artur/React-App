@@ -2,7 +2,7 @@ import React, { ReactNode, useState, useRef, useEffect } from 'react';
 
 interface Option {
   id: string;
-  title: string;
+  title: any;
 }
 
 interface DropdownProps {
