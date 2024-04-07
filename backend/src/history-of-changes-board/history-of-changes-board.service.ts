@@ -3,7 +3,7 @@ import { CreateHistoryOfChangesBoardDto } from './dto/create-history-of-changes-
 import { UpdateHistoryOfChangesBoardDto } from './dto/update-history-of-changes-board.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { HistoryOfChangesBoard } from './entities/history-of-changes-board.entity';
-import { TaskColumn } from 'src/task-columns/entities/task-column.entity';
+import { TaskColumn } from '../task-columns/entities/task-column.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

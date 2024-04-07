@@ -2,7 +2,7 @@ import { AutoMap } from "@automapper/classes";
 import { Task } from "../../tasks/entities/task.entity";
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn, ManyToOne } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { Board } from "src/board/entities/board.entity";
+import { Board } from "../../board/entities/board.entity";
 
 @Entity()
 export class TaskColumn {

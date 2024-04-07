@@ -10,7 +10,7 @@ interface EditableTitleProps
 const EditableTitle: React.FC<EditableTitleProps> = ({ initialTitle, onSave, focusInput }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(initialTitle);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (focusInput && inputRef.current) {
@@ -22,7 +22,7 @@ const EditableTitle: React.FC<EditableTitleProps> = ({ initialTitle, onSave, foc
     setIsEditing(true);
   };
 
-  const handleTitleChange = (event) => {
+  const handleTitleChange = (event: any) => {
     setEditedTitle(event.target.value);
   };
 

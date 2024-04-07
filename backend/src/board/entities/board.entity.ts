@@ -1,6 +1,6 @@
 import { AutoMap } from "@automapper/classes";
 import { ApiProperty } from "@nestjs/swagger";
-import { TaskColumn } from "src/task-columns/entities/task-column.entity";
+import { TaskColumn } from "../../task-columns/entities/task-column.entity";
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn } from "typeorm";
 
 @Entity()

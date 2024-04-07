@@ -9,7 +9,15 @@
   docker compose build
   docker compose up
   ```
-
+* storybook
+  ```
+  npx storybook init
+  npm run storybook
+  ```
+* JEST
+  ```
+  npx jest
+  ```
 
 # React + TypeScript + Vite
 

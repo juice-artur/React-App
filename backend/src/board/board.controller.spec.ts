@@ -1,20 +1,31 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BoardController } from './board.controller';
-import { BoardService } from './board.service';
+import { INestApplication } from '@nestjs/common';
 
-describe('BoardController', () => {
-  let controller: BoardController;
+import * as request from 'supertest';
+import { AppModule } from '../app.module';
+
+describe('BoardController (e2e)', () => {
+  let app: INestApplication;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [BoardController],
-      providers: [BoardService],
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
     }).compile();
 
-    controller = module.get<BoardController>(BoardController);
+    app = moduleFixture.createNestApplication();
+    await app.init();
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  it('/POST boards', async () => {
+    const payload = { title: 'Test Board' };
+    return request(app.getHttpServer())
+      .post('/boards')
+      .send(payload)
+      .expect(201)
+      .then((response) => {
+        expect(response.body.title).toEqual(payload.title);
+      });
   });
+
 });
+
