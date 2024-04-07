@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { CreateTask, Priority } from '../../../types/Task';
 import ReactDropdown from '../../dropdown/ReactDropdown';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
+import Button from '../../Button/Button';
 
 
 interface CreateTaskModalProps {
@@ -35,7 +36,7 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onCrea
     setTaskDate(e.target.value);
   };
 
-  const handleDropdownChange = (e) => {    
+  const handleDropdownChange = (e) => {
     setTaskPriority(e.id);
   };
 
@@ -101,17 +102,18 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onCrea
               />
 
               <div className="flex justify-end">
-                <button
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mr-2"
+                <Button
+                  classNames={['mr-2']}
+                  variant="primary"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleCreateTask();
                   }}
                 >
                   Create
-                </button>
-                <button
-                  className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
+                </Button>
+                <Button
+                  variant="secondary"
                   onClick={(e) => {
                     e.stopPropagation();
                     onClose();
@@ -119,7 +121,7 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onCrea
                   }}
                 >
                   Cancel
-                </button>
+                </Button>
               </div>
             </div>
           </div>

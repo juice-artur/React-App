@@ -2,10 +2,10 @@ import { ReactNode } from "react";
 
 export interface ButtonProps
 {
-    children: ReactNode,
+    children?: ReactNode,
     variant: string,
-    onClick: (e)=>{},
-    classNames: string[];
+    onClick: (e: any)=>{},
+    classNames?: string[];
 }
 
 const Button = ({ children, variant, onClick, classNames }: ButtonProps) => {
