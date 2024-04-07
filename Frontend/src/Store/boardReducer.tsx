@@ -21,9 +21,11 @@ const boardReducer = (state = initialState, action: any) => {
 
             }
         case CREATE_BOARD:
+            console.log(action.payload);
+            
             return {
                 ...state,
-                boards: [action.payload, ...state.boards],
+                boards: [...state.boards, action.payload],
                 loading: false
             }
         case PATCH_BOARD:
@@ -40,7 +42,7 @@ const boardReducer = (state = initialState, action: any) => {
             } else {
                 return state;
             }
-        case DELETE_BOARD:
+        case DELETE_BOARD:            
             const afterDelete = [...state.boards]
             .filter(el => 
                 {                    

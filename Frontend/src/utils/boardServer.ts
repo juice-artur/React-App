@@ -28,6 +28,7 @@ export const createBoard = (createBoard: Board) => async (dispatch: Dispatch) =>
       const baseurl = import.meta.env.VITE_API_BASE_URL
       const res = await axios.post(`${baseurl}/boards`, createBoard, {
       }); 
+      console.log(res);
       
       dispatch( {
         type: CREATE_BOARD,

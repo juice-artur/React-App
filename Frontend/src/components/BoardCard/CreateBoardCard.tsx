@@ -3,6 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import EditableTitle from "../EditableTitle/EditableTitle";
 import { createBoard } from "../../utils/boardServer";
 import { useDispatch } from "react-redux";
+import Button from "../Button/Button";
 
 interface CreateBoardProps {
     classNames?: string[];
@@ -16,14 +17,13 @@ const CreateBoardCard: React.FC<CreateBoardProps> = ({ classNames = [] }: Create
         setNewTitle(newTitle);
     };
 
-    const onClose = () =>
-    {
+    const onClose = () => {
         setNewTitle("New board");
         setIsEditing(false);
     }
 
     const handleCreateBoard = () => {
-        dispatch(createBoard({title: title}))
+        dispatch(createBoard({ title: title }))
         onClose();
     };
 
@@ -42,31 +42,31 @@ const CreateBoardCard: React.FC<CreateBoardProps> = ({ classNames = [] }: Create
                         <div className="flex justify-center m-2">
                             <EditableTitle
                                 initialTitle={title}
-                                onSave={handleTitleChanged}/>
+                                onSave={handleTitleChanged} />
                         </div>
-
 
 
                         <div className="h-24 m-8">
                             <div className="flex justify-end">
-                                <button
-                                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mr-2"
+                                <Button
+                                classNames={['mr-2']}
+                                    variant="primary"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         handleCreateBoard();
                                     }}
                                 >
                                     Create
-                                </button>
-                                <button
-                                    className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
+                                </Button>
+                                <Button
+                                    variant="secondary"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         onClose();
                                     }}
                                 >
                                     Cancel
-                                </button>
+                                </Button>
                             </div>
                         </div>
 
