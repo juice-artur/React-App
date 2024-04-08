@@ -22,25 +22,25 @@ const BoardPage = () => {
     const fetchData = async (id: number) => {
         try {
             const baseurl = import.meta.env.VITE_API_BASE_URL
-
             const response = await axios.get(`${baseurl}/history-of-changes-board/find-all-by-board-id/${id}`);
-            console.log(response);
-            
             setHistory(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
 
-    useEffect(() => {
-        dispatch(getAllTasks());
-        dispatch(getAllTaskColumnsByBoardId(id));
-        fetchData(Number(id));
-    }, [dispatch]);
+
 
 
     const columns = useSelector((state: any) => state.columnReducer.columns);
     const tasks = useSelector((state: any) => state.taskReducer.tasks);
+
+    useEffect(() => {
+        dispatch(getAllTasks());
+        dispatch(getAllTaskColumnsByBoardId(id));
+        fetchData(Number(id));
+    }, [columns]);
+
     const onDragEnd = (result: DropResult) => {
         const { source, destination, draggableId } = result;
 
@@ -168,14 +168,13 @@ const BoardPage = () => {
 
                 {showSidebar && (
                     <div style={{ width: "400px", backgroundColor: "#f0f0f0", borderLeft: "1px solid #ccc", position: "fixed", right: 0, top: 64, bottom: 0, zIndex: 999 }}>
-                         <button className="float-right mx-4 my-2 z-40" onClick={toggleSidebar}><FaHistory /></button>
-                         <br />
+                        <button className="float-right mx-4 my-2 z-40" onClick={toggleSidebar}><FaHistory /></button>
+                        <br />
                         <ul className="list-disc pl-5">
                             {
-                                
-                            history.map((change, index) => (
-                                <li key={index}>{change.description}</li>
-                            ))}
+                                history.map((change, index) => (
+                                    <li key={index}>{change.description}</li>
+                                ))}
                         </ul>
 
                     </div>

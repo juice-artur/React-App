@@ -5,8 +5,7 @@ export interface Board {
 }
 
 
-export interface HistoryOfChangesBoard
-{
+export interface HistoryOfChangesBoard {
     id?: number;
-    title: string;
+    description: string;
 }
