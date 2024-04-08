@@ -7,28 +7,9 @@ import { UpdateHistoryOfChangesBoardDto } from './dto/update-history-of-changes-
 export class HistoryOfChangesBoardController {
   constructor(private readonly historyOfChangesBoardService: HistoryOfChangesBoardService) {}
 
-  @Post()
-  create(@Body() createHistoryOfChangesBoardDto: CreateHistoryOfChangesBoardDto) {
-    return this.historyOfChangesBoardService.create(createHistoryOfChangesBoardDto);
-  }
 
   @Get('find-all-by-board-id/:id')
   findAllByBoardId(@Param('id') id: string) {
     return this.historyOfChangesBoardService.findAllByBoardId(Number(id));
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.historyOfChangesBoardService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHistoryOfChangesBoardDto: UpdateHistoryOfChangesBoardDto) {
-    return this.historyOfChangesBoardService.update(+id, updateHistoryOfChangesBoardDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.historyOfChangesBoardService.remove(+id);
   }
 }
