@@ -12,23 +12,9 @@ export class HistoryOfChangesTaskController {
     return this.historyOfChangesTaskService.create(createHistoryOfChangesTaskDto);
   }
 
-  @Get()
-  findAll() {
-    return this.historyOfChangesTaskService.findAll();
-  }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findAllByTaskId(@Param('id') id: string) {
     return this.historyOfChangesTaskService.findAllByTaskId(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateHistoryOfChangesTaskDto: UpdateHistoryOfChangesTaskDto) {
-    return this.historyOfChangesTaskService.update(+id, updateHistoryOfChangesTaskDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.historyOfChangesTaskService.remove(+id);
   }
 }

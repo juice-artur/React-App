@@ -14,7 +14,7 @@ export const CreateTaskListModal: React.FC<CreateTaskListModalProps> = ({ isOpen
     const [listTitle, setListTitle] = useState('');
 
     const { id } = useParams();
-    const handleTitleChange = (e) => {
+    const handleTitleChange = (e: any) => {
         setListTitle(e.target.value);
     };
 

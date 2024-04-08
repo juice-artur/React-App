@@ -76,8 +76,10 @@ export const EditTaskModalWindow: React.FC<EditTaskModalProps> = ({ task, isOpen
   };
 
   useEffect(() => {
-    fetchData(task.id);
-  }, []);
+    if (isOpen) {
+      fetchData(task.id);
+    }
+  }, [isOpen, task.id]);
 
   return (
     <>

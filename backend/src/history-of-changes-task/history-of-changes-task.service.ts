@@ -38,19 +38,4 @@ export class HistoryOfChangesTaskService {
     });
   }
 
-  findAll() {
-    return `This action returns all historyOfChangesTask`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} historyOfChangesTask`;
-  }
-
-  update(id: number, updateHistoryOfChangesTaskDto: UpdateHistoryOfChangesTaskDto) {
-    return `This action updates a #${id} historyOfChangesTask`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} historyOfChangesTask`;
-  }
 }

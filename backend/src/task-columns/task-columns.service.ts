@@ -19,7 +19,6 @@ export class TaskColumnsService {
     ) { }
 
   async create(createTaskColumnDto: CreateTaskColumnDto)  {
-    console.log(createTaskColumnDto)
      let Columnn = await  (await this.taskColumnRepository.find())
      .sort((prev:TaskColumn, curr:TaskColumn) => prev.position - curr.position);
      
