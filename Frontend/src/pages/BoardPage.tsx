@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { FaHistory } from "react-icons/fa";
 import { HistoryOfChangesBoard } from "../types/Board";
 import axios from "axios";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 
 
@@ -28,9 +29,6 @@ const BoardPage = () => {
             console.error('Error fetching data:', error);
         }
     };
-
-
-
 
     const columns = useSelector((state: any) => state.columnReducer.columns);
     const tasks = useSelector((state: any) => state.taskReducer.tasks);
@@ -166,19 +164,7 @@ const BoardPage = () => {
                     </Droppable>
                 </DragDropContext>
 
-                {showSidebar && (
-                    <div style={{ width: "400px", backgroundColor: "#f0f0f0", borderLeft: "1px solid #ccc", position: "fixed", right: 0, top: 64, bottom: 0, zIndex: 999 }}>
-                        <button className="float-right mx-4 my-2 z-40" onClick={toggleSidebar}><FaHistory /></button>
-                        <br />
-                        <ul className="list-disc pl-5">
-                            {
-                                history.map((change, index) => (
-                                    <li key={index}>{change.description}</li>
-                                ))}
-                        </ul>
-
-                    </div>
-                )}
+                {showSidebar && <Sidebar history={history} toggleSidebar={toggleSidebar} />}
             </div>
         </>
 

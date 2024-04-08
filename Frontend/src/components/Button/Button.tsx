@@ -4,7 +4,7 @@ export interface ButtonProps
 {
     children?: ReactNode,
     variant: string,
-    onClick: (e: any)=>{},
+    onClick: (e: any)=> void,
     classNames?: string[];
 }
 
